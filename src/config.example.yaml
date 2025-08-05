@@ -1,0 +1,38 @@
+# ==============================
+# Example MCP Risk Server Config
+# ==============================
+
+# Name for this run (used for output/log folder naming)
+run_name: my_run
+
+# Select risk score to compute: 
+#   HAS-BLED, CHA2DS2-VASc, or EuroSCORE II
+risk_score: HAS-BLED
+
+# --- Network Settings ---
+# Optional: Set HTTP/HTTPS proxy if required for your network
+# If not set, defaults to environment variables if set, else no proxy.
+network:
+  http_proxy:
+  https_proxy:
+
+# --- Output Settings ---
+# Output folder for results and logs (default: ./outputs)
+output_folder: ./outputs
+
+# --- API Keys ---
+# If not set here, keys are expected as environment variables (see README).
+api:
+  api_key:      # Secret API key (e.g., sk-...)
+  org_key:      # Organization key, if required (e.g., org-...)
+  project_id:   # Project ID, if required (e.g., proj_...)
+
+# --- Model Settings ---
+# LLM provider: openai, deepseek, perplexity, or qwen
+provider: openai
+# Model name you have access to, or leave as 'default' to use provider default
+model: gpt-4-1106-preview
+
+# --- LLM API Call Parameters ---
+params:
+  # Add optional parameters for LLM API calls here

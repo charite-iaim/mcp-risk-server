@@ -1,0 +1,18 @@
+Patient ID: P4ab463aa
+Name: Maria Keller
+Date of Birth: 28.03.1981
+Discharge Date: 15.07.2025
+Sex: Female
+The patient has well-controlled blood pressure, with systolic values consistently below 160 mmHg during hospitalization (average systolic BP: 128 mmHg).
+The patient does not have chronic kidney disease, is not on dialysis, has never had a kidney transplant, and is not receiving chronic renal replacement therapy. Her most recent serum creatinine level was 0.89 mg/dL (within normal limits).
+The patient has no history of liver cirrhosis and no clinical or imaging evidence of chronic liver disease. Laboratory values show AST at 28 U/L, ALT at 35 U/L, and ALP at 72 U/L. Her total bilirubin is measured at 0.7 mg/dL.
+The patient has no prior history of stroke or transient ischemic attack (TIA).
+There is no documented history of major bleeding events, including intracranial hemorrhage, bleeding requiring hospitalization, transfusion, or endoscopic intervention.
+The patient is not on warfarin therapy; therefore, INR variability is not applicable. However, when INR has been measured for unrelated reasons, it has remained within the normal therapeutic range more than 50% of the time.
+The patient is not taking any antiplatelet agents (e.g., aspirin or clopidogrel) or NSAIDs (e.g., ibuprofen) at the time of discharge.
+The patient reports no alcohol consumption currently or in the past 12 months.
+As a female, the patient’s hemoglobin level is 12.6 g/dL, which is above the 12 g/dL threshold and thus not contributing to anemia-associated bleeding risk.
+Other Medications at Discharge:
+	•	Metoprolol succinate 25 mg daily (for supraventricular tachycardia)
+	•	Atorvastatin 10 mg nightly (for lipid management)
+	•	Vitamin D3 (cholecalciferol) 1000 IU daily

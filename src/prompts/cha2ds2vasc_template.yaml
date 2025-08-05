@@ -1,0 +1,75 @@
+intro: |
+  This is the discharge letter of a fictitious patient: {{letter}}.
+date_of_birth: |
+  Extract the date of birth of the patient and assign and return the result in JSON format:
+  {
+    "date_of_birth": value
+  }
+date_of_discharge: |
+  Extract the date of hospital discharge as specified in the most recent discharge letter in the format DD.MM.YYYY. Return the result in JSON format:
+  {
+    "date_of_discharge": date
+  }
+is_female: |
+  Identify the patient's sex according to the patient's name and how the patient is adressed. Set 'is_female: 1' if the patient is female, otherwise set 'is_female: 0'. Return the result in JSON format:
+  {
+    "is_female": value
+  }
+chf_symptoms: |
+  Based on the discharge letter, does the patient meet any of the following criteria (answer “yes” if any are true): The patient is documented as having dyspnoea at rest or on exertion. The patient is documented as having fatigue. The patient is documented as having reduced exercise capacity. The patient is documented as having dizziness. The patient is documented as having lightheadedness. The patient is documented as having peripheral edema. If any of the above are documented, set 'chf_symptoms: 1'. If none of the above are documented, set 'chf_symptoms: 0'. Return the result in JSON format:
+  {
+    "chf_symptoms": value
+  }
+chf_history: |
+  Based on the discharge letter, does the patient meet any of the following criteria (answer “yes” if any are true): The patient has a documented clinical diagnosis of heart failure, regardless of ejection fraction (i.e., both HFrEF and HFpEF qualify). The patient has a documented history of decompensated heart failure. The patient has a documented history of tachycardia-induced cardiomyopathy.
+  If any of the above are documented, set 'chf_history: 1'. If none of the above are documented, set 'chf_history: 0'. Return the result in JSON format:
+  {
+    "chf_history": value
+  }
+chf_lvef: |
+  Does the discharge letter state that the patient has a left ventricular ejection fraction (LVEF) below 40% (both HFrEF and HFpEF qualify) according to the most recent echocardiography exam? If yes, set 'chf_lvef: 1', otherwise set 'chf_lvef: 0'. Return the result in JSON format:
+  {
+    "chf_lvef": value
+  }
+hypertension_diagnosis: |
+  Does the discharge letter explicitly state that the patient is diagnosed with arterial hypertension or has resting blood pressure consistently above 140/90 mmHg on at least two occasions? If yes, set 'hypertension_diagnosis: 1', otherwise set 'hypertension_diagnosis: 0'.  Return the result in JSON format:
+  {
+    "hypertension_diagnosis": value
+  }
+hypertension_medication: |
+  Based on the discharge letter, does the patient take at least one medication from the following classes commonly used to treat hypertension?
+  - Calcium channel blockers: e.g., Amlodipine, Nifedipine, Lercanidipine, Felodipine
+  - ACE inhibitors: e.g., Ramipril, Enalapril, Lisinopril, Perindopril
+  - Angiotensin II receptor blockers (ARBs): e.g., Losartan, Valsartan, Candesartan, Olmesartan
+  - Beta blockers: e.g., Metoprolol, Bisoprolol, Atenolol, Carvedilol
+  - Thiazide diuretics: e.g., Hydrochlorothiazide, Indapamide, Chlortalidone
+  - Other vasodilators: e.g., Hydralazine (also called Dihydralazine)
+  - Centrally acting agents: e.g., Moxonidine, Clonidine
+  If the discharge letter indicates that the patient is currently prescribed at least one such medication, set 'hypertension_medication: 1'. If not, set 'hypertension_medication: 0'. Return the result in JSON format:
+  {
+    "hypertension_medication": value
+  }
+stroke_history: |
+  Does the discharge letter state that the patient has a documented history of an ischemic stroke, transient ischemic attack (TIA), or arterial thromboembolism (e.g., embolism to cerebral, peripheral, or other arterial sites). If any of the above are documented, set 'stroke_history: 1', otherwise set 'stroke_history: 0'. Return the result in JSON format:
+  {
+    "stroke_history": value
+  }
+diabetes: |
+  Based on the discharge letter, does the patient have a documented diagnosis of diabetes mellitus (type 1 or type 2), or is the patient currently prescribed at least one glucose-lowering medication? Common medication classes include: biguanides (e.g., Metformin), sulfonylureas (e.g., Glimepiride, Gliclazide), DPP-4 inhibitors (e.g., Sitagliptin, Linagliptin), GLP-1 receptor agonists (e.g., Liraglutide, Semaglutide, SGLT2 inhibitors (e.g., Empagliflozin, Dapagliflozin), thiazolidinediones (e.g., Pioglitazone), and Insulin.
+  If the discharge documentation mentions a diagnosis of diabetes mellitus or the patient is on one or more of the above medication classes, set 'diabetes: 1'. Otherwise, set 'diabetes: 0'. Return the result in JSON format:
+  {
+    "diabetes": value
+  }
+hba1c: |
+  hba1c: |
+  Extract the patient's HbA1c value from the current laboratory results in the discharge letter. If an HbA1c value is found, set 'hba1c' to that value as a float rounded to one decimal place. If no HbA1c value is mentioned, set 'hba1c': "missing".
+  Return the result in JSON format:
+  {
+    "hba1c": value
+  }
+vascular_disease: |
+  Based on the discharge letter, does the patient have a documented history of any of the following: Myocardial infarction (MI), coronary artery disease (CAD), including history of percutaneous coronary intervention (PCI) or coronary artery bypass grafting (CABG), peripheral arterial disease (PAD), or aortic atherosclerotic disease, such as complex plaque or aneurysm?
+  If any of the above are documented, set 'vascular_disease: 1'. Otherwise, set 'vascular_disease: 0'. Return the result in JSON format:
+  {
+    "vascular_disease": value
+  }

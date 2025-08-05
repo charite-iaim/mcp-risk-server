@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files / Caches
+__pycache__/
+.pytest_cache
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.mcp-env/
+
+# Distribution / packaging
+*.egg-info/
+
+# Logs and outputs
+logs/
+outputs/
+*.log
+
+# OS files
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
