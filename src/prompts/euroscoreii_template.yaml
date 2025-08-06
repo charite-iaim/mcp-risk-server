@@ -1,7 +1,7 @@
 intro: |
   This is the discharge letter of a fictitious patient scheduled for aortic valve replacement: {{letter}}.
 date_of_birth: |
-  Extract the date of birth of the patient and assign and return the result in JSON format:
+  Extract the date of birth of the patient and return the result in JSON format:
   {
     "date_of_birth": value
   }
@@ -11,177 +11,177 @@ date_of_discharge: |
     "date_of_discharge": date
   }
 is_female: |
-  Do the reports state that the  patient is female? If yes, set 'is_female: 1', otherwise 'is_female: 0'. Return the result in the JSON format:
+  Do the reports state that the  patient is female? If yes, set "is_female": 1, otherwise "is_female": 0. Return the result in the JSON format:
   {
     "is_female": value
   }
 bronchodilators: |
-  Do the medical reports state that the patient is on bronchodilators (such as salmeterol or tiotropium)? If yes, set 'bronchodilators: 1', otherwise set 'bronchodilators: 0'.  Return the result in the JSON format:
+  Do the medical reports state that the patient is on bronchodilators (such as salmeterol or tiotropium)? If yes, set "bronchodilators": 1, otherwise set "bronchodilators": 0.  Return the result in the JSON format:
   {
     "bronchodilators": value
   }
 steroids: |
-  Do the medical reports state that the patient is taking corticosteroids and has lung disease such as COPD or interstitial lung disease? If yes, set 'steroids: 1', otherwise set 'steroids: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is taking corticosteroids and has lung disease such as COPD or interstitial lung disease? If yes, set "steroids": 1, otherwise set "steroids": 0. Return the result in the JSON format:
   {
     "steroids": value
   }
 claudication: |
-  Do the medical reports state that the patient is suffering from claudication (i.e. pain in the legs or arms that occurs while walking or using the arms due to peripheral artery disease)? If yes, set 'claudication: 1', otherwise 'claudication: 0'.  Return the result in the JSON format:
+  Do the medical reports state that the patient is suffering from claudication (i.e. pain in the legs or arms that occurs while walking or using the arms due to peripheral artery disease)? If yes, set "claudication": 1, otherwise "claudication": 0.  Return the result in the JSON format:
   {
     "claudication": value
   } 
 carotid: |
-  Do the medical reports state that the patient has carotid occlusion and/or >50% stenosis of the carotid artery? If yes, return 'carotid: 1', otherwise 'carotid: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient has carotid occlusion and/or >50% stenosis of the carotid artery? If yes, return "carotid": 1, otherwise "carotid": 0. Return the result in the JSON format:
   {
     "carotid": value
   } 
 procedure: |
-  Do the medical reports state that the patient had an amputation due to arterial disease and/or had a previous or has a planned intervention on the abdominal aorta, limb arteries or carotids? If yes, set 'procedure: 1', otherwise 'procedure: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient had an amputation due to arterial disease and/or had a previous or has a planned intervention on the abdominal aorta, limb arteries or carotids? If yes, set "procedure": 1, otherwise "procedure": 0. Return the result in the JSON format:
   {
     "procedure": value
   }
 poor_mobility: |
-  Do the medical reports state that the patient is suffering from neurological or musculoskeletal dysfunction severely affecting mobility (e.g., the patient is utilizing a walker and/or a wheelchair)? If yes, set 'poor_mobility: 1', otherwise 'poor_mobility: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is suffering from neurological or musculoskeletal dysfunction severely affecting mobility (e.g., the patient is utilizing a walker and/or a wheelchair)? If yes, set "poor_mobility": 1, otherwise "poor_mobility": 0. Return the result in the JSON format:
   {
     "poor_mobility": value
   }
 prev_cardiac_surgery: |
-  Do the medical reports state that the patient ever had a cardiac surgery procedure that required opening of the pericardium (such as CABG or heart valve surgery excluding endovascular valve replacement such as TAVR)? If yes, set 'prev_cardiac_surgery: 1', otherwise set 'prev_cardiac_surgery: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient ever had a cardiac surgery procedure that required opening of the pericardium (such as CABG or heart valve surgery excluding endovascular valve replacement such as TAVR)? If yes, set "prev_cardiac_surgery": 1, otherwise set "prev_cardiac_surgery": 0. Return the result in the JSON format:
   {
     "prev_cardiac_surgery": value
   }
 active_endocarditis: |
-  Do the medical reports state that the patient is on antibiotic treatment for endocarditis at the time of surgery? If yes, set 'active_endocarditis: 1', otherwise 'active_endocarditis: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is on antibiotic treatment for endocarditis at the time of surgery? If yes, set "active_endocarditis": 1, otherwise "active_endocarditis": 0. Return the result in the JSON format:
   {
     "active_endocarditis": value
   }
 critical_rhythm: |
-  Do the medical reports state that the patient had ventricular tachycardia or fibrillation preoperatively in the same hospital admission as the operation? If yes, set 'critical_rhythm: 1', otherwise set 'critical_rhythm: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient had ventricular tachycardia or fibrillation preoperatively in the same hospital admission as the operation? If yes, set "critical_rhythm": 1, otherwise set "critical_rhythm": 0. Return the result in the JSON format:
   {
     "critical_rhythm": value
   }
 critical_cpr: |
-  Do the medical reports state that the patient had aborted sudden death and/or needed cardiac massage preoperatively in the same hospital admission as the operation? If yes, set 'critical_cpr: 1', otherwise set 'critical_cpr: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient had aborted sudden death and/or needed cardiac massage preoperatively in the same hospital admission as the operation? If yes, set "critical_cpr": 1, otherwise set "critical_cpr": 0. Return the result in the JSON format:
   {
     "critical_cpr": value
   }
 critical_rescue: |
-  Do the medical reports state that the patient needed ventilation and/or inotropes and/or mechanical circulatory support (such as IABP, Impella, VAD, ECMO)  preoperatively in the same hospital admission as the operation? If yes, set 'critical_rescue: 1', otherwise set 'critical_rescue: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient needed ventilation and/or inotropes and/or mechanical circulatory support (such as IABP, Impella, VAD, ECMO)  preoperatively in the same hospital admission as the operation? If yes, set "critical_rescue": 1, otherwise set "critical_rescue": 0. Return the result in the JSON format:
   {
     "critical_rescue": value
   }
 critical_renal: |
-  Do the medical reports state that the patient had acute renal failure (defined as anuria or oliguria <10 ml/h) preoperatively in the same hospital admission as the operation? If yes, set 'critical_renal: 1', otherwise set 'critical_renal: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient had acute renal failure (defined as anuria or oliguria <10 ml/h) preoperatively in the same hospital admission as the operation? If yes, set "critical_renal": 1, otherwise set "critical_renal": 0. Return the result in the JSON format:
   {
     "critical_renal": value
   }
 dialysis: |
-  Do the medical reports state that the patient is on dialysis? If yes, set 'dialysis: 1', otherwise set 'dialysis: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is on dialysis? If yes, set "dialysis": 1, otherwise set "dialysis": 0. Return the result in the JSON format:
   {
     "dialysis": value
   }
 egfr: |
-  Extract the patient's most recent estimated glomerular filtration rate (eGFR) value and set 'egfr: most recent eGFR value as an integer'. If no eGFR value is provided in the medical reports, then set 'egfr: missing'. Return the result in the JSON format:
+  Extract the patient"s most recent estimated glomerular filtration rate (eGFR) value and set "egfr: most recent eGFR value as an integer". If no eGFR value is provided in the medical reports, then set "egfr: missing". Return the result in the JSON format:
   {
     "egfr": value
   }
 diabetes_on_insulin: |
-  Do the medical reports state that the patient has diabetes mellitus and is receiving insulin therapy. If yes, set 'diabetes_on_insulin: 1', otherwise set 'diabetes_on_insulin: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient has diabetes mellitus and is receiving insulin therapy. If yes, set "diabetes_on_insulin": 1, otherwise set "diabetes_on_insulin": 0. Return the result in the JSON format:
   {
     "diabetes_on_insulin": value
   }
 ccs4: |
-  Do the medical reports state that the patient has angina at rest? If yes, set 'ccs4: 1', otherwise set 'ccs4: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient has angina at rest? If yes, set "ccs4": 1, otherwise set "ccs4": 0. Return the result in the JSON format:
   {
     "ccs4": value
   }
 lvef: |
-  Extract the patient's most recent left-ventricular ejection fraction (LVEF) value and assign the value to 'lvef'. If no information about the left ventricular ejection fraction (LVEF) value is provided, then set 'lvef: missing'. Return the result in the JSON format:
+  Extract the patient's most recent left-ventricular ejection fraction (LVEF) value and assign the value to "lvef". If no information about the left ventricular ejection fraction (LVEF) value is provided, then set "lvef: missing". Return the result in the JSON format:
   {
     "lvef": value
   } 
 lvef_literal: |
-  If only a literal description of the LVEF, instead of a percentage, is provided, then pick the most matching value, i.e., 'normal', 'good', 'moderate', 'poor', or 'very poor' and assign it to 'lvef_literal'. If no information about the left ventricular ejection fraction (LVEF) value is provided, then set 'lvef_literal: missing'. Return the result in the JSON format:
+  If only a literal description of the LVEF, instead of a percentage, is provided, then pick the most matching value, i.e., "normal", "good", "moderate", "poor", or "very poor" and assign it to "lvef_literal". If no information about the left ventricular ejection fraction (LVEF) value is provided, then set "lvef_literal: missing". Return the result in the JSON format:
   {
     "lvef_literal": value
   }
 recent_mi: |
-  Do the medical reports state that the patient had a myocardial infarction (e.g., STEMI/NSTEMI) within the last 90 days? If yes, set 'recent_mi: 1', otherwise 'recent_mi: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient had a myocardial infarction (e.g., STEMI/NSTEMI) within the last 90 days? If yes, set "recent_mi": 1, otherwise "recent_mi": 0. Return the result in the JSON format:
   {
     "recent_mi": value
   }
 spap: |
-  Extract the most recent systolic pulmonary artery pressure value obtained by right heart catheterization and assign the value to 'spap'. Otherwise, set 'spap: missing'. Return the result in the JSON format:
+  Extract the most recent systolic pulmonary artery pressure value obtained by right heart catheterization and assign the value to "spap". Otherwise, set "spap: missing". Return the result in the JSON format:
   {
     "spap": value
   }
 spap_echo: |
-  Extract the most recent sPAP value obtained by echocardiography and assign the value to Set 'spap_echo'. If the patient's sPAP value could not be estimated with echocardiography or was described as being normal, then set 'spap_echo: normal'. Return the result in the JSON format:
+  Extract the most recent sPAP value obtained by echocardiography and assign the value to Set "spap_echo". If the patient's sPAP value could not be estimated with echocardiography or was described as being normal, then set "spap_echo: normal". Return the result in the JSON format:
   {
     "spap_echo": value
   }
 nyha: |
-  Extract the NYHA stage and assign it to 'nyha'. Otherwise, if no NYHA stage is given and the reports indicate that there are no restrictions under everyday physical stress for the patient, then set 'nyha: I'. If the reports indicate that the patient is suffering from dyspnea causing marked limitation of ordinary physical activity (e.g. the patient has dyspnoe on exertion but can still climb one flight of stairs without stopping and walk more than 100 meters without stopping), then set 'nyha: II'. If the reports indicate that the patient is suffering from dyspnea causing marked limitation of less than ordinary activity (e.g. the patient has dyspnea on exertion and thus cannot climb one flight of stairs or walk more than 100 meters without stopping), then set 'nyha: III'. If the reports indicate that the patient is suffering from dyspnea at rest, then set 'nyha: IV'. If the patient is between two stages, set to the higher stage. Return the result in the JSON format:
+  Extract the NYHA stage and assign it to "nyha". Otherwise, if no NYHA stage is given and the reports indicate that there are no restrictions under everyday physical stress for the patient, then set "nyha: I". If the reports indicate that the patient is suffering from dyspnea causing marked limitation of ordinary physical activity (e.g. the patient has dyspnoe on exertion but can still climb one flight of stairs without stopping and walk more than 100 meters without stopping), then set "nyha: II". If the reports indicate that the patient is suffering from dyspnea causing marked limitation of less than ordinary activity (e.g. the patient has dyspnea on exertion and thus cannot climb one flight of stairs or walk more than 100 meters without stopping), then set "nyha: III". If the reports indicate that the patient is suffering from dyspnea at rest, then set "nyha: IV". If the patient is between two stages, set to the higher stage. Return the result in the JSON format:
   {
     "nyha": value
   }
 thoracic_surgery: |
-  Extract whether the patient is currently scheduled for a surgery on the thoracic aorta (e.g., ascending, arch, or descending thoracic aorta). If yes, set 'thoracic_surgery: 1', else 'thoracic_surgery: 0'. Return the result in the JSON format:
+  Extract whether the patient is currently scheduled for a surgery on the thoracic aorta (e.g., ascending, arch, or descending thoracic aorta). If yes, set "thoracic_surgery": 1, else "thoracic_surgery": 0. Return the result in the JSON format:
   {
     "thoracic_surgery": value
   }
 thoracic_aorta_mm: |
-  Extract the patient's thoracic aortic diameter in millimeter and assign the value to 'thoracic_aorta_mm' (e.g., a patient has an ascending aortic aneurysm with a diameter of 4.6 cm, then set 'thoracic_aorta_mm: 46'). If two values are given choose the numerically larger one. If no value for the patient's thoracic aortic diameter is given, set 'thoracic_aorta_mm: missing'. Return the result in the JSON format:
+  Extract the patient's thoracic aortic diameter in millimeter and assign the value to "thoracic_aorta_mm" (e.g., a patient has an ascending aortic aneurysm with a diameter of 4.6 cm, then set "thoracic_aorta_mm": 46). If two values are given choose the numerically larger one. If no value for the patient's thoracic aortic diameter is given, set "thoracic_aorta_mm": "missing". Return the result in the JSON format:
   {
     "thoracic_aorta_mm": value
   }
 urgency_elective: |
-  Do the medical reports indicate that the patient was admitted electively for surgery? If yes, set 'urgency_elective: 1', otherwise set 'urgency_elective: 0'. Return the result in the JSON format:
+  Do the medical reports indicate that the patient was admitted electively for surgery? If yes, set "urgency_elective": 1, otherwise set "urgency_elective": 0. Return the result in the JSON format:
   {
     "urgency_elective": value
   } 
 urgency_urgent: |
-  Do the medical reports indicate that the patient was not admitted electively for surgery but requires surgery on the current admission for medical reasons (indicated by the fact that this patient was not discharged from the hospital before surgery), then set 'urgency_urgent: 1', otherwise 'urgency_urgent: 0'. Return the result in the JSON format:
+  Do the medical reports indicate that the patient was not admitted electively for surgery but requires surgery on the current admission for medical reasons (indicated by the fact that this patient was not discharged from the hospital before surgery), then set "urgency_urgent": 1, otherwise "urgency_urgent": 0. Return the result in the JSON format:
   {
     "urgency_urgent": value
   }
 urgency_emergency: |
-  Do the medical reports indicate that the patient in a critical state and thus was operated before the beginning of the next working day, then set 'urgency_emergency: 1', otherwise 'urgency_emergency: 0'. Return the result in the JSON format:
+  Do the medical reports indicate that the patient in a critical state and thus was operated before the beginning of the next working day, then set "urgency_emergency": 1, otherwise "urgency_emergency": 0. Return the result in the JSON format:
   {
     "urgency_emergency": value
   }
 urgency_salvage: | 
-  Do the medical reports indicate that the patient required cardiopulmonary resuscitation (external cardiac massage) en route to the operating theatre or prior to induction of anaesthesia, then set 'urgency_salvage: 1', otherwise 'urgency_salvage: 0'. Return the result in the JSON format:
+  Do the medical reports indicate that the patient required cardiopulmonary resuscitation (external cardiac massage) en route to the operating theatre or prior to induction of anaesthesia, then set "urgency_salvage": 1, otherwise "urgency_salvage": 0. Return the result in the JSON format:
   {
     "urgency_salvage": value
   }
 weight_cabg: |
-  Do the medical reports state that the patient is scheduled for percutaneous coronary intervention (PCI) and/or CABG? If yes, set 'weight_cabg: 1', otherwise 'weight_cabg: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for percutaneous coronary intervention (PCI) and/or CABG? If yes, set "weight_cabg": 1, otherwise "weight_cabg": 0. Return the result in the JSON format:
   {
     "weight_cabg": value
   }
 weight_valve: |
-  Do the medical reports state that the patient is scheduled for another heart valve procedure in addition to aortic valve replacement? If yes, set 'weight_valve: 1', otherwise 'weight_valve: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for another heart valve procedure in addition to aortic valve replacement? If yes, set "weight_valve": 1, otherwise "weight_valve": 0. Return the result in the JSON format:
   {
     "weight_valve": value
   } 
 weight_aorta: |
-  Do the medical reports state that the patient is scheduled for aortic surgery in addition to aortic valve replacement? If yes, set 'weight_aorta: 1', otherwise 'weight_aorta: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for aortic surgery in addition to aortic valve replacement? If yes, set "weight_aorta": 1, otherwise "weight_aorta": 0. Return the result in the JSON format:
   {
     "weight_aorta": value
   }
 weight_maze: |
-  Do the medical reports state that the patient is scheduled for MAZE procedure in addition to aortic valve replacement? If yes, set 'weight_maze: 1', otherwise 'weight_maze: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for MAZE procedure in addition to aortic valve replacement? If yes, set "weight_maze": 1, otherwise "weight_maze": 0. Return the result in the JSON format:
   {
     "weight_maze": value
   }
 weight_defect: |
-  Do the medical reports state that the patient is scheduled for a repair of a structural heart defect in addition to aortic valve replacement? If yes, set 'weight_defect: 1', otherwise 'weight_defect: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for a repair of a structural heart defect in addition to aortic valve replacement? If yes, set "weight_defect": 1, otherwise "weight_defect": 0. Return the result in the JSON format:
   {
     "weight_defect": value
   }
 weight_tumor: |
-  Do the medical reports state that the patient is scheduled for a resection of a cardiac tumor in addition to aortic valve replacement? If yes, set 'weight_tumor: 1', otherwise 'weight_tumor: 0'. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for a resection of a cardiac tumor in addition to aortic valve replacement? If yes, set "weight_tumor": 1, otherwise "weight_tumor": 0. Return the result in the JSON format:
   {
     "weight_tumor": value
   }

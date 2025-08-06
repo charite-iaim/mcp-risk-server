@@ -1,28 +1,23 @@
 intro: |
   This is the discharge letter of a fictitious patient: {{letter}}.
 sys_bp: |
-  Extract the patient's systolic blood pressure during physical examination. Set 'sys_bp' to the systolic blood pressure value and return this value as an integer. If no systolic blood pressure value was recorded during the physical exam, set this value to 0. Return the result in JSON format:
+  Extract the patient's systolic blood pressure during physical examination. Set "sys_bp" to the systolic blood pressure value and return this value as an integer. If no systolic blood pressure value was recorded during the physical exam, set "sys_bp": "missing". Return the result in JSON format:
   {
     "sys_bp": value
   }
-dialysis: |
-  Does the discharge letter state that the patient receives dialysis? If yes, set 'dialysis: 1', otherwise 'dialysis: 0'. Return the result in JSON format:
-  {
-    "dialysis": value
-  } 
 renal_disease: |
-  Does the discharge letter state that the patient has ever received a kidney transplant and/or is on chronic renal replacement therapy? If yes, set 'renal_disease: 1', otherwise 'renal_disease: 0'. Return the result in JSON format:
+  Does the discharge letter state that the patient is undergoing chronic renal replacement therapy, i.e., has ever received a kidney transplant or is receiving dialysis? If yes, set "renal_disease": 1, otherwise "renal_disease": 0. Return the result in JSON format:
   {
     "renal_disease": value
   }
 creatinine: |
-  Extract the patient's serum creatinine value in mg/dL or µmol/L according to the most recent laboratory values (that usually can be found at the end of the discharge letter). Set 'creatinine' to the serum creatinine value and return this value. If no serum creatinine value was obtained, set 'creatinine' to 'missing'. If the creatinine value unit was 'mg/dL', set 'unit_mg_per_dL: True', otherwise set 'unit_mg_per_dL: False'. Return the result in JSON format:
+  Extract the patient's serum creatinine value in mg/dL or µmol/L according to the most recent laboratory values (that usually can be found at the end of the discharge letter). Set "creatinine" to the serum creatinine value and return this value. If no serum creatinine value was obtained, set "creatinine" to "missing". If the creatinine value unit was "mg/dL", set "unit_mg_per_dL": True, otherwise set "unit_mg_per_dL": False. Return the result in JSON format:
   {
     "creatinine": value
     "unit_mg_per_dL: value
   }
 liver_disease: |
-  Does the discharge letter state that the patient is suffering from liver cirrhosis? If yes, return 'liver_disease: 1', otherwise 'liver_disease: 0'. Return the result in JSON format:
+  Does the discharge letter state that the patient is suffering from liver cirrhosis? If yes, return "liver_disease": 1, otherwise "liver_disease": 0. Return the result in JSON format:
   {
     "liver_disease": value
   }
@@ -37,42 +32,42 @@ alt: |
     "alt": value
   }
 alp: |
-  Extract the patient's alkaline phosphatase (ALP) value from the most recent laboratory report. ALP may also be listed as AP, ALK PHOS, ALKP, ALPH, or APH. The ALP value should be in U/L. If the ALP value is absent, return 'alp': "missing". Return the result in JSON format:
+  Extract the patient's alkaline phosphatase (ALP) value from the most recent laboratory report. ALP may also be listed as AP, ALK PHOS, ALKP, ALPH, or APH. The ALP value should be in U/L. If the ALP value is absent, return "alp": "missing". Return the result in JSON format:
   {
     "alp": value
   }
 bilirubin: |
-  Extract the patient's total bilirubin value in mg/dL according to the most recent laboratory values (that usually can be found at the end of the discharge letter). Set 'bilirubin' to the total bilirubin value in mg/dl and return this value. If no total bilirubin value was obtained, set 'bilirubin' to 'missing'. Return the result in JSON format:
+  Extract the patient's total bilirubin value in mg/dL according to the most recent laboratory values (that usually can be found at the end of the discharge letter). Set "bilirubin" to the total bilirubin value in mg/dl and return this value. If no total bilirubin value was obtained, set "bilirubin": "missing". Return the result in JSON format:
   {
     "bilirubin": value
   }
 stroke_history: | 
-  Does the discharge letter state that the patient ever had a stroke and/or transient ischemic attack? If yes, set 'stroke_history: 1', otherwise 'stroke_history: 0'. Return the result in JSON format:
+  Does the discharge letter state that the patient ever had a stroke or transient ischemic attack? If yes, set "stroke_history": 1, otherwise "stroke_history": 0. Return the result in JSON format:
   {
     "stroke_history": value
   }
 bleeding_history: | 
-  Does the discharge letter state that the patient has a history of major bleeding (defined as intracranial bleeding and/or bleeding requiring hospitalization and/or blood transfusion and/or immediate therapy (e.g. endoscopy)? If yes, set 'bleeding_history: 1', otherwise 'bleeding_history: 0'. Return the result in JSON format:
+  Does the discharge letter state that the patient has a history of major bleeding (defined as intracranial bleeding or bleeding requiring hospitalization or blood transfusion or immediate therapy (e.g. endoscopy)? If yes, set "bleeding_history": 1, otherwise "bleeding_history": 0. Return the result in JSON format:
   {
     "bleeding_history": value
   }
 hemoglobin: |
-  Extract the patient's hemoglobin value in g/dl according to the most recent laboratory values (that usually can be found at the end of the discharge letter). Set hemoglobin to the hemoglobin value in g/dl and return this value. If no hemoglobin value was obtained, set 'hemoglobin: missing'. Return the result in JSON format:
+  Extract the patient's hemoglobin value in g/dl according to the most recent laboratory values (that usually can be found at the end of the discharge letter). Set hemoglobin to the hemoglobin value in g/dl and return this value. If no hemoglobin value was obtained, set "hemoglobin": "missing". Return the result in JSON format:
   {
     "hemoglobin": value
   }
 is_female: |
-  Identify the patient's sex according to the patient's name and how the patient is adressed. Set 'is_female: 1' if the patient is female, otherwise set 'is_female: 0'. Return the result in JSON format:
+  Identify the patient's sex according to the patient's name and how the patient is adressed. Set "is_female": 1 if the patient is female, otherwise set "is_female": 0. Return the result in JSON format:
   {
     "is_female": value
   }
 labile_inr: |
-  Does the discharge letter state that the patient is taking warfarin and that INR values are outside the therapeutic range > 60% of the time? If yes, set 'labile_inr: 1', otherwise 'labile_inr: 0'. Return the result in JSON format:
+  Does the discharge letter state that the patient is taking warfarin and that INR values are outside the therapeutic range > 60% of the time? If yes, set "labile_inr": 1, otherwise "labile_inr": 0. Return the result in JSON format:
   {
     "labile_inr": value
   }
 date_of_birth: |
-  Extract the date of birth of the patient and assign and return the result in JSON format:
+  Extract the date of birth of the patient in the format DD.MM.YYYY. Return the result in JSON format:
   {
     "date_of_birth": value
   }
@@ -82,12 +77,12 @@ date_of_discharge: |
     "date_of_discharge": date
   }
 med_bleed: |  
-  Does the discharge letter state that the patient is currently taking antiplatelet agents (such as aspirin or clopidogrel) and/or NSAIDs (such as ibuprofen)? If yes, set 'med_bleed: 1', otherwise 'med_bleed: 0'. Return the result in JSON format:
+  Does the discharge letter indicate whether the patient is currently taking antiplatelet agents, such as aspirin or clopidogrel, or nonsteroidal anti-inflammatory drugs (NSAIDs), such as ibuprofen? If so, set "med_bleed": 1; otherwise, set "med_bleed": 0. Return the result in JSON format:
   {
     "med_bleed": value
   }
 alcohol: |
-  Does the discharge letter state that the patient is drinking more than eight alcoholic drinks per week and/or is suffering from alcoholism? If yes, return 'alcohol: 1', otherwise 'alcohol: 0'. Return the result in JSON format:
+  Does the discharge letter state that the patient is drinking eight or more alcoholic drinks per week or is suffering from alcoholism? If yes, set "alcohol": 1, otherwise set "alcohol": 0. Return the result in JSON format:
   {
     "alcohol": value
   }
