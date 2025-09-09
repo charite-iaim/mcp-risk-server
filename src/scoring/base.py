@@ -61,6 +61,30 @@ class RiskScore(ABC):
                 """
             )
         return None
+    
+    def safe_nyha(self, value, default=1, missing_value="missing"):
+        if isna(value) or value == missing_value:
+            return default
+        if value in {"I", "II", "III", "IV"}:
+            match value:
+                case "I":
+                    return 1
+                case "II":
+                    return 2
+                case "III":
+                    return 3
+                case "IV":
+                    return 4
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            self.logger.warning(
+                f"""
+                    [safe_nyha] Unable to interpret value: '{value}'
+                      → returning None
+                """
+            )
+        return None
 
     def safe_bool(self, value, default=False, missing_value="missing"):
         value_str = str(value).strip().lower()
@@ -84,7 +108,7 @@ class RiskScore(ABC):
         return None
 
     def age_from_dates(self, date_of_birth: str, date_of_discharge: str):
-        # Calculate age in years
+        # Calculate age in years and leftover days from date strings
         date_format = "%d.%m.%Y"
         try:
             date1 = datetime.strptime(date_of_birth, date_format)
