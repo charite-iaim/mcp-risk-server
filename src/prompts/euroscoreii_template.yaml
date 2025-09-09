@@ -81,7 +81,7 @@ dialysis: |
     "dialysis": value
   }
 egfr: |
-  Extract the patient"s most recent estimated glomerular filtration rate (eGFR) value and set "egfr: most recent eGFR value as an integer". If no eGFR value is provided in the medical reports, then set "egfr: missing". Return the result in the JSON format:
+  Extract the patient's most recent estimated glomerular filtration rate (eGFR) value and set "egfr: most recent eGFR value as an integer". If no eGFR value is provided in the medical reports, then set "egfr: missing". Return the result in the JSON format:
   {
     "egfr": value
   }
@@ -106,22 +106,23 @@ lvef_literal: |
     "lvef_literal": value
   }
 recent_mi: |
-  Do the medical reports state that the patient had a myocardial infarction (e.g., STEMI/NSTEMI) within the last 90 days? If yes, set "recent_mi": 1, otherwise "recent_mi": 0. Return the result in the JSON format:
+  Do the medical reports state that the patient had a myocardial infarction (e.g., STEMI/NSTEMI)? If yes, set "recent_mi": 1 and extract the date of the myocardial infarction in the format DD.MM.YYYY and assign it to "date_of_recent_mi", otherwise "recent_mi": 0 and "date_of_recent_mi": None. Return the result in the JSON format:
   {
     "recent_mi": value
+    "date_of_recent_mi": date
   }
 spap: |
-  Extract the most recent systolic pulmonary artery pressure value obtained by right heart catheterization and assign the value to "spap". Otherwise, set "spap: missing". Return the result in the JSON format:
+  Extract the most recent systolic pulmonary artery pressure value obtained by right heart catheterization and assign the value to "spap". Otherwise, set "spap": "missing". Return the result in the JSON format:
   {
     "spap": value
   }
 spap_echo: |
-  Extract the most recent sPAP value obtained by echocardiography and assign the value to Set "spap_echo". If the patient's sPAP value could not be estimated with echocardiography or was described as being normal, then set "spap_echo: normal". Return the result in the JSON format:
+  Extract the most recent sPAP value obtained by echocardiography and assign the value to Set "spap_echo". If the patient's sPAP value could not be estimated with echocardiography or was described as being normal, then set "spap_echo": "normal". Return the result in the JSON format:
   {
     "spap_echo": value
   }
 nyha: |
-  Extract the NYHA stage and assign it to "nyha". Otherwise, if no NYHA stage is given and the reports indicate that there are no restrictions under everyday physical stress for the patient, then set "nyha: I". If the reports indicate that the patient is suffering from dyspnea causing marked limitation of ordinary physical activity (e.g. the patient has dyspnoe on exertion but can still climb one flight of stairs without stopping and walk more than 100 meters without stopping), then set "nyha: II". If the reports indicate that the patient is suffering from dyspnea causing marked limitation of less than ordinary activity (e.g. the patient has dyspnea on exertion and thus cannot climb one flight of stairs or walk more than 100 meters without stopping), then set "nyha: III". If the reports indicate that the patient is suffering from dyspnea at rest, then set "nyha: IV". If the patient is between two stages, set to the higher stage. Return the result in the JSON format:
+  Extract the NYHA stage and assign it to "nyha". Otherwise, if no NYHA stage is given and the reports indicate that there are no restrictions under everyday physical stress for the patient, then set "nyha": "I". If the reports indicate that the patient is suffering from dyspnea causing marked limitation of ordinary physical activity (e.g. the patient has dyspnoe on exertion but can still climb one flight of stairs without stopping and walk more than 100 meters without stopping), then set "nyha": "II". If the reports indicate that the patient is suffering from dyspnea causing marked limitation of less than ordinary activity (e.g. the patient has dyspnea on exertion and thus cannot climb one flight of stairs or walk more than 100 meters without stopping), then set "nyha": "III". If the reports indicate that the patient is suffering from dyspnea at rest, then set "nyha": "IV". If the patient is between two stages, set to the higher stage. Return the result in the JSON format:
   {
     "nyha": value
   }
