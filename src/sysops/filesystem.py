@@ -1,3 +1,4 @@
+from datetime import datetime
 import git
 import logging
 import os
@@ -54,7 +55,7 @@ def setup_directories(cfg):
     """
     root_dir = _get_repo_root()
     outputs_dir = cfg.get("outputs_dir", "outputs")
-    score = get_str_representation(cfg["risk_score"])
+    score = get_score_str(cfg["risk_score"])
     # Ensure directories are absolute paths
     if not os.path.isabs(outputs_dir):
         outputs_dir = os.path.join(root_dir, outputs_dir)
@@ -95,3 +96,10 @@ def read_text_files(data_folder: Union[Path, str]) -> dict:
         with open(p, "r") as f:
             texts[p.stem] = f.read()
     return texts
+
+
+def save_log(item: str, log_dir: Path, response: str, ts=None):
+    if ts is None:
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    with open(log_dir / Path(f"{item}_{ts}.log"), "w") as f:
+        f.write(response)

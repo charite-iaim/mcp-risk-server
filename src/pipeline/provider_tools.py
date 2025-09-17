@@ -44,13 +44,17 @@ class Extractor:
         # Search for all possible JSON blocks and get the last one
         matches = self.json_rx.findall(text_with_json)
         if not matches:
-            print(f"ERROR\tCould not extract JSON block: {text_with_json}")
+            logger.error(f"Could not extract JSON block: {text_with_json}")
             return {}
         last_json = matches[-1]
         try:
             return json.loads(last_json)
         except json.JSONDecodeError as e:
-            print(f"ERROR\tCould not decode JSON: {e}\nRaw block: {last_json}")
+            logger.error(
+                f"""
+                    Could not decode JSON: {e}\nRaw block: {last_json}
+                """
+            )
             return {}
 
 
@@ -108,7 +112,9 @@ class Pipeline:
         results = results.reindex(columns=results.columns.union(items))
         return results
 
-    def call_llm(self, score_str: str, text: str, text_id: str) -> pd.Series:
+    def call_llm(
+        self, score_str: str, text: str, text_id: str, ts: str = None
+    ) -> pd.Series:
         """
         Creates one prompt per item and returns after
         all items have been queried.
@@ -124,7 +130,7 @@ class Pipeline:
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
 
-        print(f"STATUS\tLogs will be written to {log_dir}")
+        logger.info(f"Logs will be written to {log_dir}")
 
         # collect already inferred items
         results_file1 = self.stage1_dir / Path(f"{score_str}_llm.csv")
@@ -136,7 +142,6 @@ class Pipeline:
 
         results_row = results.loc[text_id]
         missing_items = results_row[results_row.isna()].index.tolist()
-
         jinja_template = Template(template_dict["intro"])
         prompt_intro = jinja_template.render(letter=text)
 
@@ -146,15 +151,13 @@ class Pipeline:
 
             # Call LLM processing routine
             response = self.call_per_item(prompt, system_prompt)
-
             # Log timestamped response
-            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-            with open(log_dir / Path(f"{item}_{ts}.log"), "w") as f:
-                f.write(response)
+            save_log(item, log_dir, response, ts=ts)
 
             # Extract item value from response
             value_dict = self.extractor(response)
-            if item in value_dict.keys():
+            if item in value_dict:
+                results[item] = results[item].astype("object")
                 results.at[text_id, item] = value_dict[item]
             else:
                 logger.warning(
@@ -176,14 +179,14 @@ class Pipeline:
         if len(missing_items) > 1:
             logger.info(
                 f"""
-                    STATUS\tInferred all items for {text_id}:
-                        written to\t{results_file1}
+                    Inferred all items for {text_id}:
+                    written to\t{results_file1}
                 """
             )
         else:
             logger.info(
                 f"""
-                STATUS\tNothing to query, calculate final score
+                    Nothing to query, calculate final score
                 """
             )
         return results.loc[text_id]
@@ -225,9 +228,11 @@ class Pipeline:
         if text_id in scores_df.index:
             ts = datetime.now().strftime("%Y%m%d%H%M%S")
             text_id_new = f"{text_id}_{ts}"
-            print(
-                f"WARNING\tScore already computed for {text_id}, \
-                  will update case under ID {text_id_new}"
+            logger.warning(
+                f"""
+                    Score already computed for {text_id}, \
+                    will update case under ID {text_id_new}
+                """
             )
             text_id = text_id_new
 
@@ -235,7 +240,11 @@ class Pipeline:
         assert (score_items.index == scores_df.columns).all()
         scores_df.loc[text_id] = score_items
         scores_df.reset_index().to_csv(self.results_file2, index=False)
-        print(f"STATUS\tCalculated scores written to\t{self.results_file2}")
+        logger.info(
+            f"""
+                Calculated scores written to\t{self.results_file2}
+            """
+        )
         return scores_df.loc[text_id]["score"]
 
     def tear_down(self):
@@ -278,7 +287,7 @@ def llm_pipeline(data_folder: str, risk_score: str, config_file: str) -> dict:
     text_ids = sorted(texts.keys())
     for text_id in text_ids:
         text = texts[text_id]
-        print(f"STATUS\tProcessing {text_id}")
+        logger.info(f"Processing {text_id}")
 
         # 1st Step: LLM inference for raw items
         results_row = pipeline.call_llm(score_str, text, text_id)

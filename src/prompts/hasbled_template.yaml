@@ -11,9 +11,13 @@ renal_disease: |
     "renal_disease": value
   }
 creatinine: |
-  Extract the patient's serum creatinine value in mg/dL or µmol/L according to the most recent laboratory values (that usually can be found at the end of the discharge letter). Set "creatinine" to the serum creatinine value and return this value. If no serum creatinine value was obtained, set "creatinine" to "missing". If the creatinine value unit was "mg/dL", set "unit_mg_per_dL": True, otherwise set "unit_mg_per_dL": False. Return the result in JSON format:
+  Extract the patient's serum creatinine value in mg/dL or µmol/L according to the most recent laboratory values (that usually can be found at the end of the discharge letter). Set "creatinine" to the serum creatinine value and return this value. If no serum creatinine value was obtained, set "creatinine" to "missing". Return the result in JSON format:
   {
     "creatinine": value
+  }
+unit_mg_per_dL: |
+  If a creatinine value could be extracted and the unit was "mg/dL", set "unit_mg_per_dL": 1, otherwise set "unit_mg_per_dL": 0. Return the result in JSON format:
+  {
     "unit_mg_per_dL: value
   }
 liver_disease: |
