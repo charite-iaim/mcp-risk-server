@@ -1,7 +1,8 @@
 # /tests/pipeline/test_call_llm.py
 
 from datetime import datetime
-from pandas import read_csv, DataFrame, Series
+import os
+from pandas import concat, read_csv, DataFrame, Series
 import pandas.testing as pdt
 from pathlib import Path
 import pytest
@@ -9,6 +10,7 @@ import tempfile
 from unittest.mock import patch, MagicMock
 
 from src.pipeline.provider_tools import Pipeline
+from src.sysops.names import get_score_str
 
 
 @pytest.fixture
@@ -97,7 +99,6 @@ def test_collect_results_init(default_config, hasbled_completions):
 
 def test_checkpointing_llm_init(default_config, hasbled_completions):
     import os
-    from src.sysops.names import get_score_str
 
     # Test checkpoint folder creation for initial run
     # mock client.chat.completions.create called by call_llm -> call_per_item
@@ -106,7 +107,7 @@ def test_checkpointing_llm_init(default_config, hasbled_completions):
     pipeline = Pipeline(config)
     score_str = get_score_str(config["risk_score"])
     text_id = "Case_12345"
-    mocked_responses = [v[0] for v in list(hasbled_completions.values())]
+    mocked_responses = [v[0] for v in hasbled_completions.values()]
     solution_series = Series({k: v[1] for k, v in hasbled_completions.items()})
     solution_series.name = text_id
     solution_df = DataFrame({k: [v[1]] for k, v in hasbled_completions.items()})
@@ -137,8 +138,68 @@ def test_checkpointing_llm_init(default_config, hasbled_completions):
                 assert response in log
 
 
-def test_checkpointing_llm_proceed(default_config):
-    # Test checkpoint folder creation for initial run
+def test_checkpointing_llm_proceed_within_case(default_config, hasbled_completions):
+    # Test checkpointing with a single incomplete processed report
+    # Assume items[0:12] have already been processed and backed up
+    config = default_config.copy()
+    pipeline = Pipeline(config)
+    score_str = get_score_str(config["risk_score"])
+    text_id = "Case_12345"
+    idx = 12  # item index until which queries have already been processed
+    mocked_responses = [v[0] for v in list(hasbled_completions.values())[idx:]]
+    # write back to results file first idx_done items
+    results_file1 = pipeline.stage1_dir / Path(f"{score_str}_llm.csv")
+
+    solution_part1_df = DataFrame(
+        {k: [v[1]] for k, v in list(hasbled_completions.items())[:idx]}
+    )
+    solution_part1_df["index"] = [text_id]
+    solution_part1_df.to_csv(results_file1, index=False)
+
+    # 2nd part will be retrieved in pipeline call and complemented
+    solution_part2_df = DataFrame(
+        {k: [v[1]] for k, v in list(hasbled_completions.items())[idx:]}
+    )
+
+    solution_df = concat([solution_part1_df, solution_part2_df], axis=1)
+
+    solution_part2_df["index"] = [text_id]
+
+    # return of call() will be complete list of items built from
+    # checkpointed and call extracted item values
+    solution_series = Series({k: v[1] for k, v in hasbled_completions.items()})
+    solution_series.name = text_id
+
+    log_dir = pipeline.log_base_dir / text_id
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    # call_per_item is patched, list of mocked_responses iterated instead
+    with patch.object(pipeline, "call_per_item", side_effect=mocked_responses):
+        target_series = pipeline.call_llm(
+            score_str=score_str, text="Report text", text_id=text_id, ts=ts
+        )
+
+        assert solution_series.shape[0] == target_series.shape[0]
+        # check results row0
+        pdt.assert_series_equal(target_series, solution_series)
+        # check existence of results file
+        assert os.path.exists(results_file1)
+        target_from_file = read_csv(results_file1)
+
+        pdt.assert_frame_equal(solution_df, target_from_file, check_like=True)
+        # check existence of log file
+        assert os.path.exists(log_dir)
+        for item, values in list(hasbled_completions.items())[idx:]:
+            response = values[0]
+            log_file = log_dir / Path(f"{item}_{ts}.log")
+            assert os.path.exists(log_file)
+            with open(log_file) as f:
+                log = f.read()
+                assert response in log
+
+
+def test_checkpointing_llm_proceed_with_next_case(default_config):
+    # Test checkpointing with incompletely processed reports:
+    # first report completed, second report not started yet
     config = default_config.copy()
     pipeline = Pipeline(config)
 

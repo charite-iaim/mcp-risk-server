@@ -109,7 +109,17 @@ class Pipeline:
             results = pd.read_csv(results_file1, index_col="index")
         else:
             results = pd.DataFrame(columns=items)
-        results = results.reindex(columns=results.columns.union(items))
+
+        # Augment with any missing columns from `items` and fill with NaN
+        for col in items:
+            if col not in results.columns:
+                results[col] = nan
+
+        #  Ensure union of columns, but in the order of 'items'
+        # all_cols = [col for col in items if col in results.columns] + [col for col in results.columns if col not in items]
+        # results = results.reindex(columns=all_cols)
+        # Reindex to match column order exactly to `items`
+        results = results.reindex(columns=items)
         return results
 
     def call_llm(
@@ -138,10 +148,14 @@ class Pipeline:
 
         # infer remaining
         if text_id not in results.index:
-            results.loc[text_id] = [nan] * len(results.columns)
+            results.loc[text_id, :] = [nan] * len(items)
 
         results_row = results.loc[text_id]
-        missing_items = results_row[results_row.isna()].index.tolist()
+        # query behaviour: items already queried, but failed to be
+        # extracted will be queried again.
+        missing_items = results_row[results_row.isna()].index.tolist() + [
+            item for item in items if not item in results_row.index
+        ]
         jinja_template = Template(template_dict["intro"])
         prompt_intro = jinja_template.render(letter=text)
 
