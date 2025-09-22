@@ -1,3 +1,5 @@
+# /src/pipeline/provider_tools.py
+
 from datetime import datetime
 from jinja2 import Template
 import json
@@ -16,6 +18,10 @@ from src.sysops.filesystem import *
 from src.sysops.names import *
 from src.sysops import network
 from src.scoring.base import RiskScoreFactory
+from src.scoring.cha2ds2vasc import *
+from src.scoring.euroscoreii import *
+from src.scoring.hasbled import *
+
 
 from src.core import fastmcp_app
 
@@ -25,14 +31,6 @@ BASE_URLS = {
     "deepseek": "https://api.deepseek.com",
     "qwen": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
 }
-
-
-def RESULT(msg):
-    print(f"\033[92mRESULT\033[0m {msg}")
-
-
-def WARN(msg):
-    print(f"\033[91mWARNING\033[0m {msg}")
 
 
 class Extractor:
@@ -61,6 +59,9 @@ class Extractor:
 class Pipeline:
 
     def __init__(self, cfg: dict) -> None:
+        # get string representation of risk score
+        self.score_str = get_score_str(cfg["risk_score"])
+
         self._cfg = cfg
         self._cfg["params"] = self._cfg.get("params") or {}
         kwargs = self._cfg["params"].pop("chat_template_kwargs", None)
@@ -77,6 +78,10 @@ class Pipeline:
         self.log_base_dir = Path(cfg["log_dir"])
         self.stage1_dir = Path(cfg["stage1_dir"])
         self.stage2_dir = Path(cfg["stage2_dir"])
+
+        self.results_file1 = self.stage1_dir / Path(f"{self.score_str}_llm.csv")
+
+        self.results_file2 = self.stage2_dir / Path(f"{self.score_str}_calc.csv")
 
         # Collect keys for API calls
         keys = network.collect_api_keys(cfg)
@@ -104,34 +109,34 @@ class Pipeline:
                 raise ValueError(f"Unknown API: {cfg['provider']}")
         self.extractor = Extractor()
 
-    def _collect_results(self, results_file1: Path, items: List):
-        if results_file1.exists():
-            results = pd.read_csv(results_file1, index_col="index")
+    def _collect_results(self, results_file: Path, items: List):
+        # return dataframe index on a column named "index"
+        # in case datafile exists possibly missing columns will be added,
+        # otherwise an empty frame is constructed
+        items = [item for item in items if item != "index"]
+        if results_file.exists():
+            results = pd.read_csv(results_file, index_col="index")
         else:
+            items = [item for item in items if item != "index"]
             results = pd.DataFrame(columns=items)
+            results.index.name = "index"
 
-        # Augment with any missing columns from `items` and fill with NaN
+        # augment with any missing columns from 'items' and fill with NaN
         for col in items:
             if col not in results.columns:
                 results[col] = nan
 
-        #  Ensure union of columns, but in the order of 'items'
-        # all_cols = [col for col in items if col in results.columns] + [col for col in results.columns if col not in items]
-        # results = results.reindex(columns=all_cols)
-        # Reindex to match column order exactly to `items`
         results = results.reindex(columns=items)
         return results
 
-    def call_llm(
-        self, score_str: str, text: str, text_id: str, ts: str = None
-    ) -> pd.Series:
+    def call_llm(self, text: str, text_id: str, ts: str = None) -> pd.Series:
         """
         Creates one prompt per item and returns after
         all items have been queried.
         """
         assert len(text) > 0, "Text must not be empty"
         # load template dictionary
-        template_dict = load_prompt_template(score_str)
+        template_dict = load_prompt_template(self.score_str)
         system_prompt = load_system_prompt()
         items = [k for k in template_dict.keys() if k != "intro"]
 
@@ -143,8 +148,7 @@ class Pipeline:
         logger.info(f"Logs will be written to {log_dir}")
 
         # collect already inferred items
-        results_file1 = self.stage1_dir / Path(f"{score_str}_llm.csv")
-        results = self._collect_results(results_file1, items)
+        results = self._collect_results(self.results_file1, items)
 
         # infer remaining
         if text_id not in results.index:
@@ -163,12 +167,13 @@ class Pipeline:
             logger.info(f"Processing {text_id}:\t{item}")
             prompt = " ".join([prompt_intro, template_dict[item]])
 
-            # Call LLM processing routine
+            # call LLM processing routine
             response = self.call_per_item(prompt, system_prompt)
+
             # Log timestamped response
             save_log(item, log_dir, response, ts=ts)
 
-            # Extract item value from response
+            # extract item value from response
             value_dict = self.extractor(response)
             if item in value_dict:
                 results[item] = results[item].astype("object")
@@ -181,8 +186,8 @@ class Pipeline:
                     """
                 )
 
-            # Save updated results
-            results.reset_index().to_csv(results_file1, index=False)
+            # save updated results
+            results.reset_index().to_csv(self.results_file1, index=False)
             logger.info(
                 f"""
                     [call_llm] Updated results for {text_id}:
@@ -194,7 +199,7 @@ class Pipeline:
             logger.info(
                 f"""
                     Inferred all items for {text_id}:
-                    written to\t{results_file1}
+                    written to\t{self.results_file1}
                 """
             )
         else:
@@ -224,42 +229,42 @@ class Pipeline:
             return "".join(completion_agg)
         return completion.choices[0].message.content
 
-    def call_calc(self, score_str: str, results_row: pd.DataFrame, text_id: str):
+    def call_calc(self, results_row: pd.DataFrame, text_id: str) -> pd.Series:
 
-        # Dynamically call scoring function
-        score = RiskScoreFactory.create(score_str.lower())
+        # dynamically call scoring function
+        score = RiskScoreFactory.create(self.score_str.lower())
         score_items = score.calculate(results_row)
 
-        # Load existing results file or initialize as empty
-        calc_file = Path(f"{score_str}_calc.csv")
-        self.results_file2 = self.stage2_dir / calc_file
-        if self.results_file2.exists():
-            scores_df = pd.read_csv(self.results_file2, index_col="index")
-        else:
-            scores_df = pd.DataFrame(columns=score_items.index)
+        # load existing results file or initialize as empty
+        items = score_items.index
+        scores_df = self._collect_results(self.results_file2, items)
 
-        # Ensure text id is unique
-        if text_id in scores_df.index:
+        # ensure text id is unique
+        if text_id in scores_df.index and not pd.isna(scores_df.at[text_id, "score"]):
+            if not self._cfg.get("recalculate", False):
+                score = scores_df.at[text_id, "score"]
+                logger.debug(
+                    f"""
+                    Score already computed for {text_id}: {score}, \
+                    will skip recalculation step as set in config.
+                """
+                )
+                return scores_df.loc[text_id]
             ts = datetime.now().strftime("%Y%m%d%H%M%S")
             text_id_new = f"{text_id}_{ts}"
-            logger.warning(
+            logger.debug(
                 f"""
-                    Score already computed for {text_id}, \
-                    will update case under ID {text_id_new}
+                    Score already computed for {text_id}, will recalculate and update case under ID {text_id_new}
                 """
             )
             text_id = text_id_new
 
-        # Write processed items with final score back
+        # write processed items with final score back
         assert (score_items.index == scores_df.columns).all()
         scores_df.loc[text_id] = score_items
         scores_df.reset_index().to_csv(self.results_file2, index=False)
-        logger.info(
-            f"""
-                Calculated scores written to\t{self.results_file2}
-            """
-        )
-        return scores_df.loc[text_id]["score"]
+
+        return scores_df.loc[text_id]
 
     def tear_down(self):
         """
@@ -285,28 +290,36 @@ def llm_pipeline(data_folder: str, risk_score: str, config_file: str) -> dict:
         'config_file': str  # path to config.yaml with api key and model name
     }
     """
-    # Get string representation of risk score
-    score_str = get_score_str(risk_score)
 
-    # Read configuration file
+    # read configuration file
     assert os.path.isfile(config_file)
     with open(config_file) as f:
         cfg = yaml.safe_load(f)
 
-    # Read patient data stored as txt file in data folder
+    # read patient data stored as txt file in data folder
     texts = read_text_files(data_folder)
 
-    # Init pipeline
+    # init pipeline
     pipeline = Pipeline(cfg)
     text_ids = sorted(texts.keys())
+    results = []
     for text_id in text_ids:
         text = texts[text_id]
         logger.info(f"Processing {text_id}")
 
         # 1st Step: LLM inference for raw items
-        results_row = pipeline.call_llm(score_str, text, text_id)
+        results_row = pipeline.call_llm(text, text_id)
 
         # 2nd Step: Apply physician rules and formula
-        score = pipeline.call_calc(score_str, results_row, text_id)
+        result = pipeline.call_calc(results_row, text_id)
+        results.append(result)
 
-        RESULT(f"{risk_score} of {text_id}:\t{score}")
+        logger.info(f"{risk_score} of {text_id}:\t{result['score']}")
+
+    logger.info(
+        f"""
+            Calculated scores written to\t{pipeline.results_file2}
+        """
+    )
+    df_as_dict = pd.DataFrame(results).to_dict(orient="records")
+    return {"results": df_as_dict}

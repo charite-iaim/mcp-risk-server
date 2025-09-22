@@ -4,21 +4,21 @@ Date of Birth: 22.06.1950
 Discharge Date: 01.07.2025  
 Sex: Male
 
-The patient’s systolic blood pressure readings throughout admission frequently exceeded 170mmHg, with documented episodes reaching up to 180mmHg.
-He has a history of dialysis-dependent chronic renal failure. Current serum creatinine level is 2.9mg/dL, and he has previously received a kidney transplant.
-There is a background of cirrhotic liver disease (confirmed by imaging), and laboratory results from 16.06.2025 show ALT 223U/L, ALP 415U/L (both greater than 3 times the upper limit of normal), and total bilirubin 4.6mg/dL.
+The patient’s systolic blood pressure readings throughout admission frequently exceeded 170 mmHg, with documented episodes reaching up to 180mmHg.
+He has a history of dialysis-dependent chronic renal failure. Current serum creatinine level is 2.9 mg/dL, and he has previously received a kidney transplant.
+There is a background of cirrhotic liver disease (confirmed by imaging), and laboratory results from 16.06.2025 show ALT 223 U/L, ALP 415 U/L (both greater than 3 times the upper limit of normal), and total bilirubin 4.6 mg/dL.
 Medical history includes a prior ischemic stroke, resulting in a persistent mild dysarthria.
 The patient has suffered multiple recent major bleeding episodes, including upper gastrointestinal bleeding requiring hospitalization, transfusions, and endoscopic intervention.
 He remains on warfarin therapy. INR monitoring over the past six months has shown persistent instability, with less than 40% of values within therapeutic range.
-He receives regular dual antiplatelet therapy (aspirin 100mg and clopidogrel 75mg daily) in addition to daily ibuprofen for osteoarthritis.
+He receives regular dual antiplatelet therapy (aspirin 100 mg and clopidogrel 75 mg daily) in addition to daily ibuprofen for osteoarthritis.
 The patient currently consumes 5–6 standard alcoholic drinks daily and reports similar intake for the past three decades.
-Most recent hemoglobin is measured at 11.4g/dL.
+Most recent hemoglobin is measured at 11.4 g/dL.
 
 Other Medications at Discharge: 
-- Amlodipine 5mg daily (for hypertension)  
-- Esomeprazole 40mg daily (for gastric protection)  
-- Rosuvastatin 10mg nightly (for dyslipidemia)  
+- Amlodipine 5 mg daily (for hypertension)  
+- Esomeprazole 40 mg daily (for gastric protection)  
+- Rosuvastatin 10 mg nightly (for dyslipidemia)  
 - Warfarin, dose adjusted to INR  
-- Aspirin 100mg daily  
-- Clopidogrel 75mg daily  
-- Ibuprofen 400mg three times daily
+- Aspirin 100 mg daily  
+- Clopidogrel 75 mg daily  
+- Ibuprofen 400 mg three times daily

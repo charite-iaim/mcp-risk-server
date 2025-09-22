@@ -36,3 +36,7 @@ model: gpt-4-1106-preview
 # --- LLM API Call Parameters ---
 params:
   # Add optional parameters for LLM API calls here
+
+# --- Recalculation and Overwrite Policy ---
+## recalculate scores that have already been calculated
+recalculate: false
