@@ -76,7 +76,7 @@ def test_call_calc_hasbled(default_config, default_llm_hasbled):
     config = default_config.copy()
     pipeline = Pipeline(config)
     results_calc = pipeline.call_calc(results_llm, text_id)
-    assert results_calc['score'] == 0
+    assert results_calc["score"] == 0
 
 
 def make_pipeline_and_row(config, score_str):
