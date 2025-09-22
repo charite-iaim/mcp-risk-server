@@ -94,7 +94,8 @@ def read_text_files(data_folder: Union[Path, str]) -> dict:
         if p.name.startswith(".") or not p.name.lower().endswith(".txt"):
             continue
         with open(p, "r") as f:
-            texts[p.stem] = f.read()
+            text_id = p.stem.split("_")[0]
+            texts[text_id] = f.read()
     return texts
 
 
