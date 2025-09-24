@@ -1,8 +1,0 @@
-fastmcp
-git
-jinja2
-openai
-pandas
-pyaml
-regex
-requests

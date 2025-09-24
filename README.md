@@ -1,25 +1,45 @@
 
 # README 
 
-## Instructions
+
+## 🚀 Installation
 
 ### Prerequisites
 Create and activate virtual environment
 ```shell
-python3 -m venv mcp-env
-source mcp-env/bin/activate
+python3 -m venv .mcp-env
+source .mcp-env/bin/activate
 ```
 
-Install missing packages
+Install missing packages user mode:
 ```shell
-pip install -r requirements.txt
+pip install .
 ```
 
-### Prepare your Data
+Optionally, install missing packages dev mode:
+```shell
+pip install -e .[dev]
+```
 
-### Configure Settings
 
-Populate your configuration file, e.g., by duplicating `config.example.yaml` and naming it, e.g., to `my_config.yaml`:
+## 📝 Prepare Your Data
+Create a directory, e.g., named `data_dir` and place your patient reports as individual text files inside it.
+
+**File Naming**: Each file should correspond to a single case; the case ID will be extracted from the file name by removing the extension. If an underscore (`_`) is present, only the part before the first underscore is used as the case ID.
+**File Format**: plain text format and UTF-8 encoding recommended.
+
+```shell
+data_dir
+      ├ Pa30df485.txt
+      ├ P6d9b89a8.txt
+            :
+      └ P0b1d9044.txt
+```
+
+
+## 📦 Configure Settings
+
+Populate your configuration file, e.g., by duplicating `config.example.yaml` and re-naming it to say `my_config.yaml`:
 
 ```shell
 cp config.example.yaml my_config.yaml
@@ -31,16 +51,24 @@ provider: openai # supported: openai, deepseek, perplexity, qwen
 model: gpt-4-1106-preview # or any other model name the provider gives you access to
 ```
 
-Depending on which LLM provider you target, you have to set the following keys as environment variables to execute connection tests for your aimed provider:
+Depending on which LLM provider you selected, you have to set the following keys either as environment variables (option 1) or directly in the config (option 2):
 
-| Provider | Environment Variable |
-| -- | -- |
-| Alibaba | `API_KEY` |
-| DeepSeek | `API_KEY` |
-| OpenAI | `API_KEY` (*sk-...*), `ORG_KEY` (*org-...*), `PROJECT_ID` (*proj_...*) |
-| Perplexity | `API_KEY` | 
+api:
+  api_key:      # Secret API key (e.g., sk-...)
+  org_key:      # Organization key, if required (e.g., org-...)
+  project_id:   # Project ID, if required (e.g., proj_...)
 
-Advanced: You can set the keys permanently in a separate bash script `.bash_keys` with tight permissions. First create a separate file:
+
+| Provider | Environment Variable | Config Variable |
+| -- | -- | -- |
+| Alibaba | `API_KEY` | `api:api_key` |
+| DeepSeek | `API_KEY` | `api:api_key` |
+| OpenAI | `API_KEY` (*sk-...*) | `api:api_key` |
+| | `ORG_KEY` (*org-...*) | `api:org_key` |
+| | `PROJECT_ID` (*proj_...*) | `api:project_id` |
+| Perplexity | `API_KEY` | `api:api_key` |
+
+**Advanced**: You can set the keys permanently in a separate bash script `.bash_keys` with tight permissions. First create a separate file:
 ```shell
 vi ~/.bash_keys
 ```
@@ -55,30 +83,34 @@ if [ -f ~/.bash_secrets ]; then
 fi
 ```
 
-### Run Server
-To run locally simply start the server in terminal via
+## 🖥️ Run Server
+After having configured the configuration file and prepared the text data, for a local run of the Scoring server simply type in repo root level 
 ```shell
 python server.py
 ```
-which will start the Scoring Server with the HTTP transport layer on port 8000. In terminal you should see output that indicates that the FastMCP server is running and is open for MCP communication on ` http://127.0.0.1:8000/mcp/`. You can quit the server anytime with Ctrl + C in terminal. 
+This will start the server with the HTTP transport layer on port 8000. In terminal you should see output that indicates that the FastMCP server is running and is open for MCP communication on ` http://127.0.0.1:8000/mcp/`. You can quit the server anytime with Ctrl + C in terminal. 
 
-### Run Client
-As soon and as long the server is running, you can call the client simply by giving your config file:
+## 🤖 Run Client
+Assuming your server is up and running, you can call the client simply by giving your config file:
 ```shell
 python client.py my_config.yaml
 ```
 
-### Output
-Two basic output directories are created:
+## 📂 Output
+Two basic output directories are created, prefixed :
 
-- Log dir: `./logs/<run_name>`
-- Results dir: `./output/<run_name>`
+- Log dir: `./outputs/logs/<run_name>`
+- Results dir: `./outputs/<run_name>`
 
-LLM responses will be stored under `./logs/<run_name>/<case_id>` as one text file per query in the format `<item>_<timestamp>.log`. These files serve mainly for debugging.
+Default folder is `outputs`, but can be changed under `output_folder` in your config.
+For logging purposes LLM responses will be stored in the log dir separated by case id item-wise, in the format `<item>_<timestamp>.log`. `run_name` is taken from your config and `case_id`s extracted from text file prefixes as described here.
 
-Items extracted from the LLM-returned JSON string are aggregated over the cohort and stored in table `./outputs/<run_name>/intermediate/<score>/<score>_llm.csv`. Final risk scores calculated on `<score>_llm.csv` are placed into table `./outputs/<run_name>/final/<score>/<score>_calc.csv`.
 
-## Add another Risk Score
+Important to you is that items extracted from the LLM-returned JSON strings are aggregated over all texts and stored in table `./outputs/<run_name>/stage1/<score>/<score>_llm.csv`. Final risk scores calculated on `<score>_llm.csv` are placed into table `./outputs/<run_name>/stage2/<score>/<score>_calc.csv`.
+
+
+## 🧩 Customization: Adding a New Risk Score
+
 To extend the MCP server app by a new risk score, two things have to be done:
 
 - Define `NewRiskScore` as a derivative of the base class `RiskScore` and provide a `calculate` function
@@ -88,34 +120,35 @@ To extend the MCP server app by a new risk score, two things have to be done:
 Finally, modify the configuration file to name the new risk score under `payload` -> `risk_score` and run the pipeline as described above.
 
 
-### Unit Tests
+## 🧪 Unit Tests
 Most unit tests do not require an LLM provider connection or use a mockup. 
-However, the integration tests, a valid API key is needed.
+
 To execute these tests, run from top level:
 ```shell
 export PYTHONPATH=. # ensure local pytest is used
 pytest tests  # Runs complete test suit
 pytest tests/scoring  # Runs all scoring tests
 pytest tests/pipeline  # Runs end-to-end pipeline tests
-
 ```
-If you want or need to excempt end-to-end tests that require internet connection and a valid API key or vice versa, run either
+To run integration tests with mocked LLM API calls (no API key required)
 ```shell
 pytest -m mock_llm  # Runs only tests marked as "mock_llm"
-pytest -m llm_api   # Runs only tests marked as "llm_api"
 ```
-Note, that only those API end-to-end tests are executed for which a key is found in the set of environment variables.
+Only tests decorated with `@pytest.mark.real_api` will require a valid API key set as **environment variable** and consume tokens from your account:
+```shell
+pytest -m real_api   # Runs only tests marked as "real_api"
+```
 
 
-### Trouble Shooting
+## 🛠️ Trouble Shooting
 
-#### Terminate Server Process Not Working with CTRL + C
+### Terminate Server Process Not Working with CTRL + C
 Kill server for restart or termination if ctrl + c does not work by identifying associated process id and kill
 ```shell
 ps aux | grep server.py
 kill <pid>
 ```
 
-#### Repeated Warning That Items Could Not Be Extracted
+### Repeated Warning That Items Could Not Be Extracted
 
 Check the log outputs under `cfg['log_dir'] / score / case_id / <item>_timestamp.log` and verify that captured LLM output is matched by regex defined in the `Extractor` class in `provider_tools.py`

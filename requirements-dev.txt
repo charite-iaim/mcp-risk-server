@@ -1,4 +1,0 @@
--r requirements.txt
-krippendorff
-pytest
-pytest-asyncio
