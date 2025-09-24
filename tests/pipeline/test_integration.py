@@ -12,10 +12,10 @@ from unittest.mock import patch
 import yaml
 
 from src.core import fastmcp_app
-from src.pipeline.provider_tools import llm_pipeline, Pipeline
+from src.pipeline.provider_tools import Pipeline
 from src.sysops.filesystem import _get_repo_root, setup_directories
 
-from fastmcp import FastMCP, Client
+from fastmcp import Client
 
 
 @pytest.fixture
@@ -131,6 +131,7 @@ def save_dict_as_yaml(d, file_path):
         yaml.dump(d, file, sort_keys=False)
 
 
+@pytest.mark.real_api
 def test_checkpointing_llm_proceed_with_next_case1(
     default_cfg, hasbled_llm_P4ab463aa, hasbled_calc_P4ab463aa
 ):
@@ -186,6 +187,7 @@ def test_checkpointing_llm_proceed_with_next_case1(
     pdt.assert_frame_equal(results2_tgt, results2, check_like=True)
 
 
+@pytest.mark.real_api
 @pytest.mark.asyncio
 async def test_checkpointing_llm_proceed_with_next_case2(
     mcp_server,
