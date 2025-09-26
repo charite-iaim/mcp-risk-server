@@ -45,6 +45,11 @@ class Extractor:
             logger.error(f"Could not extract JSON block: {text_with_json}")
             return {}
         last_json = matches[-1]
+        # unescape raw symbols
+        last_json = last_json.encode('utf-8').decode('unicode_escape')
+        # remove single quotes
+        if last_json.startswith("'") and last_json.endswith("'"):
+            last_json = last_json[1:-1]
         try:
             return json.loads(last_json)
         except json.JSONDecodeError as e:
@@ -275,7 +280,7 @@ class Pipeline:
 
 
 @fastmcp_app.tool()
-def llm_pipeline(data_folder: str, risk_score: str, config_file: str) -> dict:
+def llm_pipeline(data_folder: str, config_file: str) -> dict:
     """
     Single entry point for the LLM pipeline. For each case file in data_folder
     risk score items are extracted and the final score calculated as defined
@@ -286,7 +291,6 @@ def llm_pipeline(data_folder: str, risk_score: str, config_file: str) -> dict:
     accepted payload:
     {
         'data_folder': str, # path to folder with patient data
-        'risk_score': str,  # one of HAS-BLED, CHA2DS2-VASc, or EuroSCORE II
         'config_file': str  # path to config.yaml with api key and model name
     }
     """
@@ -314,7 +318,7 @@ def llm_pipeline(data_folder: str, risk_score: str, config_file: str) -> dict:
         result = pipeline.call_calc(results_row, text_id)
         results.append(result)
 
-        logger.info(f"{risk_score} of {text_id}:\t{result['score']}")
+        logger.info(f"{cfg['risk_score']} of {text_id}:\t{result['score']}")
 
     logger.info(
         f"""
