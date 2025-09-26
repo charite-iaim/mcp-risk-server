@@ -6,6 +6,7 @@ import json
 import logging
 from numpy import nan
 from openai import OpenAI
+from perplexity import Perplexity
 import os
 import pandas as pd
 from pathlib import Path
@@ -13,6 +14,9 @@ import re
 from typing import List
 import yaml
 
+
+from src.core import fastmcp_app
+from src.pipeline.extractor import Extractor
 from src.sysops import network
 from src.sysops.filesystem import *
 from src.sysops.names import *
@@ -23,42 +27,13 @@ from src.scoring.euroscoreii import *
 from src.scoring.hasbled import *
 
 
-from src.core import fastmcp_app
-
 logger = logging.getLogger(__name__)
 
 BASE_URLS = {
     "deepseek": "https://api.deepseek.com",
+    "perplexity": "https://api.perplexity.ai",
     "qwen": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
 }
-
-
-class Extractor:
-
-    def __init__(self):
-        self.json_rx = re.compile(r"\{.*?\}", re.DOTALL)
-
-    def __call__(self, text_with_json: str) -> dict:
-        # Search for all possible JSON blocks and get the last one
-        matches = self.json_rx.findall(text_with_json)
-        if not matches:
-            logger.error(f"Could not extract JSON block: {text_with_json}")
-            return {}
-        last_json = matches[-1]
-        # unescape raw symbols
-        last_json = last_json.encode('utf-8').decode('unicode_escape')
-        # remove single quotes
-        if last_json.startswith("'") and last_json.endswith("'"):
-            last_json = last_json[1:-1]
-        try:
-            return json.loads(last_json)
-        except json.JSONDecodeError as e:
-            logger.error(
-                f"""
-                    Could not decode JSON: {e}\nRaw block: {last_json}
-                """
-            )
-            return {}
 
 
 class Pipeline:
@@ -94,7 +69,8 @@ class Pipeline:
         match (cfg["provider"]):
             case "deepseek":
                 self.client = OpenAI(
-                    api_key=cfg["api_key"], base_url=BASE_URLS["deepseek"]
+                    api_key=cfg["api_key"], 
+                    base_url=BASE_URLS["deepseek"]
                 )
             case "openai":
                 self.client = OpenAI(
@@ -103,8 +79,9 @@ class Pipeline:
                     project=keys["project_id"],
                 )
             case "perplexity":
-                self.client = OpenAI(
-                    api_key=self.keys["api_key"], organization=keys["organization"]
+                self.client = Perplexity(
+                    api_key=keys["api_key"],
+                    base_url=BASE_URLS["perplexity"]
                 )
             case "qwen":
                 self.client = OpenAI(

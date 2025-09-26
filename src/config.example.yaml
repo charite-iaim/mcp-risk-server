@@ -18,7 +18,7 @@ network:
 
 # --- Output Settings ---
 # Output folder for results and logs (default: ./outputs)
-output_folder: ./outputs
+outputs_dir: ./outputs
 
 # --- API Keys ---
 # If not set here, keys are expected as environment variables (see README).

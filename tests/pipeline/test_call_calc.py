@@ -63,7 +63,7 @@ def default_config():
             "provider": "deepseek",
             "network": {"http_proxy": None, "https_proxy": None},
             "model": "mock-model",
-            "output_folder": Path(tempdir) / Path("outputs"),
+            "outputs_dir": Path(tempdir) / Path("outputs"),
             "api_key": "mock-api-key",
             "org_key": None,
             "project_id": None,

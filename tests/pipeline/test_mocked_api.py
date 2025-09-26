@@ -1,5 +1,6 @@
 # src/tests/pipeline/test_mocked_api.py
 import pandas as pd
+from pathlib import Path
 import pytest
 from unittest.mock import patch, MagicMock
 
@@ -14,10 +15,10 @@ def default_config():
         "provider": "mock",
         "network": {"http_proxy": None, "https_proxy": None},
         "model": "mock-model",
-        "output_folder": "./outputs",
+        "outputs_dir": "./outputs",
         "api_key": "mock-api-key",
-        "org_key": None,
-        "project_id": None,
+        "org_key": "mock-org-key",
+        "project_id": "mock-project-id",
     }
 
 
@@ -43,7 +44,7 @@ def test_pipeline_config_attributes(default_config):
     assert pipeline._cfg["run_name"] == "test_run"
     assert pipeline._cfg["provider"] == "openai"
     assert pipeline._cfg["model"] == "mock-model"
-    assert pipeline._cfg["output_folder"] == "./outputs"
+    assert "outputs/test_run" in Path(pipeline._cfg["outputs_dir"]).as_posix()
     assert pipeline._cfg["api_key"] == "mock-api-key"
 
 

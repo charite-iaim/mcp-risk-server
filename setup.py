@@ -18,6 +18,7 @@ setup(
         'numpy',
         'openai',
         'pandas',
+        'perplexityai',
         'pyaml',
         'regex',
         'requests',

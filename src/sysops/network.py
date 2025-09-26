@@ -73,4 +73,9 @@ def collect_api_keys(cfg):
     for key in ["API_KEY", "ORG_KEY", "PROJECT_ID"]:
         if key in os.environ:
             api_keys[key.lower()] = os.environ[key]
+    # fetch Perplexity API key if not set yet
+    if cfg["provider"] == "perplexity":
+        if not api_keys["api_key"] and "PERPLEXITY_API_KEY" in os.environ:
+            api_keys["api_key"] = os.environ["PERPLEXITY_API_KEY"]
     return {k: v for k, v in api_keys.items() if v is not None}
+
