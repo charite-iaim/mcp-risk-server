@@ -1,0 +1,57 @@
+index,item,llm_output,value
+P4ab463aa,sys_bp,'{\n"sys_bp": 140\n}',140
+P4ab463aa,renal_disease,'{\n"renal_disease": 0\n}',0
+P4ab463aa,creatinine,'{\n"creatinine": "missing"\n}',"missing"
+P4ab463aa,unit_mg_per_dL,'{\n"unit_mg_per_dL": 0\n}',0
+P4ab463aa,liver_disease,'{\n"liver_disease": 0\n}',0
+P4ab463aa,ast,'{\n"ast": 100\n}',100
+P4ab463aa,alt,'{\n"alt": 90\n}',90
+P4ab463aa,alp,'{\n"alp": 300\n}',300
+P4ab463aa,bilirubin,'{\n"bilirubin": 2.5\n}',2.5
+P4ab463aa,stroke_history,'{\n"stroke_history": 0\n}',0
+P4ab463aa,bleeding_history,'{\n"bleeding_history": 0\n}',0
+P4ab463aa,hemoglobin,'{\n"hemoglobin": 15\n}',15
+P4ab463aa,is_female,'{\n"is_female": 0\n}',0
+P4ab463aa,labile_inr,'{\n"labile_inr": 0\n}',0
+P4ab463aa,date_of_birth,'{\n"date_of_birth": "01.02.1960"\n}',"01.02.1960"
+P4ab463aa,date_of_discharge,'{\n"date_of_discharge": "02.02.2020"\n}',"02.02.2020"
+P4ab463aa,med_bleed,'{\n"med_bleed": 0\n}',0
+P4ab463aa,alcohol,'{\n"alcohol": 0\n}',0
+P4ab463aa,H,False,0
+P4ab463aa,A1,False,0
+P4ab463aa,A2,False,0
+P4ab463aa,S,False,0
+P4ab463aa,B,False,0
+P4ab463aa,L,False,0
+P4ab463aa,E,False,0
+P4ab463aa,D1,False,0
+P4ab463aa,D2,False,0
+P4ab463aa,score,False,0
+Pb4cf5ebc,sys_bp,'{\n"sys_bp": 170\n}',170
+Pb4cf5ebc,renal_disease,'{\n"renal_disease": 1\n}',1
+Pb4cf5ebc,creatinine,'{\n"creatinine": "missing"\n}',"missing"
+Pb4cf5ebc,unit_mg_per_dL,'{\n"unit_mg_per_dL": 1\n}',1
+Pb4cf5ebc,liver_disease,'{\n"liver_disease": 1\n}',1
+Pb4cf5ebc,ast,'{\n"ast": "missing"\n}',"missing"
+Pb4cf5ebc,alt,'{\n"alt": 223\n}',223
+Pb4cf5ebc,alp,'{\n"alp": 415\n}',415
+Pb4cf5ebc,bilirubin,'{\n"bilirubin": 4.6\n}',4.6
+Pb4cf5ebc,stroke_history,'{\n"stroke_history": 1\n}',1
+Pb4cf5ebc,bleeding_history,'{\n"bleeding_history": 1\n}',1
+Pb4cf5ebc,hemoglobin,'{\n"hemoglobin": 11.4\n}',11.4
+Pb4cf5ebc,is_female,'{\n"is_female": 0\n}',0
+Pb4cf5ebc,labile_inr,'{\n"labile_inr": 1\n}',1
+Pb4cf5ebc,date_of_birth,'{\n"date_of_birth": "22.06.1950"\n}',"22.06.1950"
+Pb4cf5ebc,date_of_discharge,'{\n"date_of_discharge": "01.07.2025"\n}',"01.07.2025"
+Pb4cf5ebc,med_bleed,'{\n"med_bleed": 1\n}',1
+Pb4cf5ebc,alcohol,'{\n"alcohol": 1\n}',1
+Pb4cf5ebc,H,False,1
+Pb4cf5ebc,A1,False,1
+Pb4cf5ebc,A2,False,1
+Pb4cf5ebc,S,False,1
+Pb4cf5ebc,B,False,1
+Pb4cf5ebc,L,False,1
+Pb4cf5ebc,E,False,1
+Pb4cf5ebc,D1,False,1
+Pb4cf5ebc,D2,False,1
+Pb4cf5ebc,score,False,9
