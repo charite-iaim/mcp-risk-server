@@ -1,0 +1,34 @@
+Patient ID: P6d6388b2
+Name: Thomas Bauer
+Date of Birth: 14.06.1956
+Admission: Elective for surgical aortic valve replacement (SAVR)
+Discharge Date: 26.07.2025
+Sex: Male
+
+History of Present Illness:
+Mr. Bauer is a 69-year-old man referred for elective surgical replacement of the aortic valve due to severe calcific aortic stenosis. Over the past year, he has developed progressive exertional dyspnea (NYHA II) and reduced exercise tolerance. Echocardiography revealed a peak gradient of 82 mmHg, mean gradient 52 mmHg, valve area 0.7 cm², and mild concentric left ventricular hypertrophy. LVEF was preserved at 60%.
+
+Past Medical History:
+    - Hypertension (well controlled with lisinopril)
+    - Mild, non-obstructive carotid atherosclerosis (<50% stenosis, asymptomatic)
+    - No prior cardiac surgery
+    - No diabetes, COPD, renal impairment, or peripheral vascular disease
+    - Never smoker
+
+Preoperative Assessment:
+    - NYHA class: II
+    - LVEF: 60%
+    - eGFR: 88 mL/min/1.73 m²
+    - sPAP (echo): 28 mmHg (normal)
+    - Carotids: <50% stenosis, no occlusion
+    - No history of myocardial infarction, arrhythmia, or resuscitation events
+    - Elective admission; no inotropes or mechanical support required
+
+Scheduled Procedure:
+Minimally invasive upper mini-sternotomy aortic valve replacement with a 23 mm bioprosthetic valve. Total cardiopulmonary bypass time: 78 minutes. No concomitant CABG or other valve surgery planned.
+
+Medications on Discharge:
+    - Aspirin 100 mg daily
+    - Lisinopril 10 mg daily
+    - Metoprolol succinate 25 mg daily
+

@@ -2,7 +2,9 @@
 import itertools
 import numpy as np
 import pandas as pd
+from pathlib import Path
 import pytest
+import yaml
 
 from src.scoring.euroscoreii import EuroSCOREII
 
@@ -14,6 +16,7 @@ def llm_row():
             "date_of_birth": "01.01.1970",
             "date_of_discharge": "01.01.2020",
             "is_female": 0,
+            "copd": 0,
             "bronchodilators": 0,
             "steroids": 0,
             "claudication": 0,
@@ -77,6 +80,14 @@ def calc_row():
             "score": 0.5,
         }
     )
+
+def test_euroscoreii_template_keys(llm_row):
+    template_file = Path("scr") / "prompts" / "euroscoreii_template.yaml" 
+    with open(template_file) as f:
+        template = yaml.safe_load(f)
+    template_keys = set(template.keys())
+    llm_keys = set(llm_row.index)
+    assert template_keys == llm_keys
 
 
 def test_euroscoreii_default(llm_row, calc_row):
@@ -427,3 +438,4 @@ def test_euroscoreii_weight_of_procedure(llm_row, calc_row):
         output = scorer.calculate(src)
         assert output["weight_of_procedure"] == tgt["weight_of_procedure"]
         assert np.isclose(output["score"], tgt["score"], atol=0.005)
+

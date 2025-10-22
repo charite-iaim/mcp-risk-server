@@ -119,9 +119,10 @@ class EuroSCOREII(RiskScore):
         female_coeff = coeffs["female"][female]
 
         # CPD
+        copd = self.safe_bool(llm_output_row.get("copd"))
         bronchodilators = self.safe_bool(llm_output_row.get("bronchodilators"))
         steroids = self.safe_bool(llm_output_row.get("steroids"))
-        cpd = bronchodilators | steroids
+        cpd = copd | bronchodilators | steroids
         cpd_coeff = coeffs["cpd"][cpd]
 
         # ECA
@@ -243,6 +244,8 @@ class EuroSCOREII(RiskScore):
         urgency_coeff = coeffs["urgency"][urgency]
 
         # Weight of procedure
+        # assume patient is scheduled for isolated CABG if no procedure is
+        # explicitly mentioned in the report
         weight_cabg = self.safe_bool(llm_output_row.get("weight_cabg"))
         weight_valve = self.safe_bool(llm_output_row.get("weight_valve"))
         weight_aorta = self.safe_bool(llm_output_row.get("weight_aorta"))
@@ -261,14 +264,13 @@ class EuroSCOREII(RiskScore):
         if procedures_non_cabg == 0:
             weight_of_procedure = "isolated CABG"
         else:  # procedures_non_cabg > 0!
-            procedures = procedures_non_cabg + (1 if weight_cabg else 0)
-            match procedures:
-                case 1:
-                    weight_of_procedure = "1 non-CABG"  # weight_cabg = 0
-                case 2:
-                    weight_of_procedure = "2"
-                case _:
-                    weight_of_procedure = "3+"
+            if procedures_non_cabg == 1 and weight_cabg == 0:
+                weight_of_procedure = "1 non-CABG"
+            elif procedures_non_cabg + weight_cabg == 2:
+                weight_of_procedure = "2"
+            else:
+                weight_of_procedure = "3+"
+        
         weight_of_procedure_coeff = coeffs["weight_of_procedure"][weight_of_procedure]
 
         items = {

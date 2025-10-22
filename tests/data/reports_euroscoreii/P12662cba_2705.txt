@@ -1,0 +1,41 @@
+Patient ID: P12662cba  
+Name: Anna Schmidt  
+Date of Birth: 03.03.1948
+Admission: Urgent for surgical mitral valve replacement (MVR) 
+Discharge Date: 10.09.2025 
+Sex: Female  
+
+History of Present Illness:  
+Ms. Schmidt is a 67-year-old woman admitted urgently for surgical replacement of the mitral valve due to severe mitral regurgitation with symptoms of heart failure (NYHA class III). Echocardiography shows severely reduced left ventricular function (LVEF 30%), pulmonary hypertension (sPAP 55 mmHg), and significant left atrial enlargement.  
+
+Past Medical History:  
+- Severe chronic pulmonary disease (COPD, GOLD stage III)  
+- Peripheral arterial disease (extracardiac arteriopathy) with claudication  
+- Poor mobility due to osteoarthritis (uses walking aid)  
+- No previous cardiac surgery  
+- No active endocarditis  
+- Not in critical state  
+- Moderate renal dysfunction (eGFR 45 mL/min/1.73 m²)  
+- Insulin-dependent diabetes mellitus (IDDM)  
+- CCS angina class = 4  
+- Recent myocardial infarction 2 months ago  
+
+Preoperative Assessment:  
+- NYHA class: III  
+- LVEF: 30%  
+- eGFR: 45 mL/min/1.73 m²  
+- sPAP (echo): 55 mmHg  
+- Peripheral arterial disease present  
+- Urgency: urgent procedure  
+- Weight and type of surgery: mitral valve replacement, complex procedure (Weight of procedure 6)  
+
+Scheduled Procedure:  
+Urgent mitral valve replacement via full sternotomy with 27 mm mechanical valve. Total cardiopulmonary bypass time expected 110 minutes. No concomitant CABG planned.
+
+Medications on Discharge:  
+- Warfarin with INR target 2.5-3.5  
+- Insulin basal-bolus regimen  
+- Bronchodilators and corticosteroid inhalers  
+- Aspirin discontinued due to mechanical valve indication  
+- ACE inhibitor (ramipril 5 mg daily)  
+- Beta-blocker (bisoprolol 5 mg daily)

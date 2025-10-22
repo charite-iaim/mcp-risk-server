@@ -15,6 +15,11 @@ is_female: |
   {
     "is_female": value
   }
+copd: |
+  Do the medical reports indicate that the patient has COPD? If yes, set "copd": 1, otherwise set "copd": 0.  Return the result in the JSON format:
+  {
+    "copd": value
+  }
 bronchodilators: |
   Do the medical reports state that the patient is on bronchodilators (such as salmeterol or tiotropium)? If yes, set "bronchodilators": 1, otherwise set "bronchodilators": 0.  Return the result in the JSON format:
   {
@@ -157,32 +162,32 @@ urgency_salvage: |
     "urgency_salvage": value
   }
 weight_cabg: |
-  Do the medical reports state that the patient is scheduled for percutaneous coronary intervention (PCI) and/or CABG? If yes, set "weight_cabg": 1, otherwise "weight_cabg": 0. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for percutaneous coronary intervention (PCI) or CABG? If yes, set "weight_cabg": 1, otherwise "weight_cabg": 0. Return the result in the JSON format:
   {
     "weight_cabg": value
   }
 weight_valve: |
-  Do the medical reports state that the patient is scheduled for another heart valve procedure in addition to aortic valve replacement? If yes, set "weight_valve": 1, otherwise "weight_valve": 0. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for aortic valve replacement? If yes, set "weight_valve": 1, otherwise "weight_valve": 0. Return the result in the JSON format:
   {
     "weight_valve": value
   } 
 weight_aorta: |
-  Do the medical reports state that the patient is scheduled for aortic surgery in addition to aortic valve replacement? If yes, set "weight_aorta": 1, otherwise "weight_aorta": 0. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for aortic surgery? If yes, set "weight_aorta": 1, otherwise "weight_aorta": 0. Return the result in the JSON format:
   {
     "weight_aorta": value
   }
 weight_maze: |
-  Do the medical reports state that the patient is scheduled for MAZE procedure in addition to aortic valve replacement? If yes, set "weight_maze": 1, otherwise "weight_maze": 0. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for MAZE procedure? If yes, set "weight_maze": 1, otherwise "weight_maze": 0. Return the result in the JSON format:
   {
     "weight_maze": value
   }
 weight_defect: |
-  Do the medical reports state that the patient is scheduled for a repair of a structural heart defect in addition to aortic valve replacement? If yes, set "weight_defect": 1, otherwise "weight_defect": 0. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for a repair of a structural heart defect? If yes, set "weight_defect": 1, otherwise "weight_defect": 0. Return the result in the JSON format:
   {
     "weight_defect": value
   }
 weight_tumor: |
-  Do the medical reports state that the patient is scheduled for a resection of a cardiac tumor in addition to aortic valve replacement? If yes, set "weight_tumor": 1, otherwise "weight_tumor": 0. Return the result in the JSON format:
+  Do the medical reports state that the patient is scheduled for a resection of a cardiac tumor? If yes, set "weight_tumor": 1, otherwise "weight_tumor": 0. Return the result in the JSON format:
   {
     "weight_tumor": value
   }
