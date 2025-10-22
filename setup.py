@@ -10,10 +10,11 @@ setup(
     description='MCP Risk Server package',
     author='Marie Hoffmann',
     author_email='aieoa-dev@proton.me',
-    packages=find_packages(),
+    packages=find_packages("src"),
+    package_dir={"": "src"},
     install_requires=[
         'fastmcp',
-        'git',
+        'gitpython',
         'jinja2',
         'numpy',
         'openai',

@@ -7,17 +7,25 @@
 Create and activate virtual environment
 ```shell
 python3 -m venv .mcp-env
+```
+macOS/Linux:
+```shell
 source .mcp-env/bin/activate
+```
+Windows:
+```shell
+.mcp-env\Scripts\activate # or 
+# .mcp-env\Scripts\Activate.psl
 ```
 
 Install missing packages user mode:
 ```shell
-pip install .
+pip install -e .
 ```
 
 Optionally, install missing packages dev mode:
 ```shell
-pip install -e .[dev]
+pip install -e . [dev]
 ```
 
 ---
@@ -132,7 +140,6 @@ Most unit tests do not require an LLM provider connection or use a mockup.
 
 To execute these tests, run from top level:
 ```shell
-export PYTHONPATH=. # ensure local pytest is used
 pytest tests  # Runs complete test suit
 pytest tests/scoring  # Runs all scoring tests
 pytest tests/pipeline  # Runs end-to-end pipeline tests
@@ -145,11 +152,12 @@ Only tests decorated with `@pytest.mark.real_api` will require a valid API key s
 
 ```shell
 export TEST_PROVIDER=perplexity
-export TEST_MODEL=sonar-small-online
+export TEST_MODEL=sonar-pro
 export TEST_API_KEY=sk-...
-export TEST_SCORE=cha2ds2vasc
 
-pytest -m real_api   # Runs only tests marked as "real_api"
+# Runs dedicated HAS-BLED score calcuation test with real 
+# API calls on two test reports located at tests/data/hasbled
+pytest -m real_api::test_real_api_hasbled   
 ```
 
 ---
