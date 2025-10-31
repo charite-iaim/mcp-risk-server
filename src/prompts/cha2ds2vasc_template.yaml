@@ -21,7 +21,7 @@ chf_symptoms: |
     "chf_symptoms": value
   }
 chf_history: |
-  Based on the discharge letter, does the patient meet any of the following criteria (answer "1" if any are true): The patient has a documented clinical diagnosis of heart failure, regardless of ejection fraction (i.e., both HFrEF and HFpEF qualify). The patient has a documented history of decompensated heart failure. The patient has a documented history of tachycardia-induced cardiomyopathy.
+  Based on the discharge letter, does the patient meet any of the following criteria (answer "1" if any are true): The patient has a documented history of decompensated heart failure. The patient has a documented history of tachycardia-induced cardiomyopathy.
   If any of the above are documented, set "chf_history": 1. If none of the above are documented, set "chf_history": 0. Return the result in JSON format:
   {
     "chf_history": value
@@ -39,11 +39,6 @@ hypertension_diagnosis: |
 hypertension_medication: |
   Based on the discharge letter, does the patient take at least one medication from the following classes commonly used to treat hypertension?
   - Calcium channel blockers: e.g., Amlodipine, Nifedipine, Lercanidipine, Felodipine
-  - ACE inhibitors: e.g., Ramipril, Enalapril, Lisinopril, Perindopril
-  - Angiotensin II receptor blockers (ARBs): e.g., Losartan, Valsartan, Candesartan, Olmesartan
-  - Beta blockers: e.g., Metoprolol, Bisoprolol, Atenolol, Carvedilol
-  - Thiazide diuretics: e.g., Hydrochlorothiazide, Indapamide, Chlortalidone
-  - Other vasodilators: e.g., Hydralazine (also called Dihydralazine)
   - Centrally acting agents: e.g., Moxonidine, Clonidine
   If the discharge letter indicates that the patient is currently prescribed at least one such medication, set "hypertension_medication": 1. If not, set "hypertension_medication": 0. Return the result in JSON format:
   {
@@ -61,14 +56,13 @@ diabetes: |
     "diabetes": value
   }
 hba1c: |
-  hba1c: |
   Extract the patient's HbA1c value from the current laboratory results in the discharge letter. If an HbA1c value is found, set "hba1c" to that value as a float. If no HbA1c value is mentioned, set "hba1c": "missing".
   Return the result in JSON format:
   {
     "hba1c": value
   }
 vascular_disease: |
-  Based on the discharge letter, does the patient have a documented history of any of the following: Myocardial infarction (MI), coronary artery disease (CAD), including history of percutaneous coronary intervention (PCI) or coronary artery bypass grafting (CABG), peripheral arterial disease (PAD), or aortic atherosclerotic disease, such as complex plaque or aneurysm?
+  Based on the discharge letter, does the patient have a documented history of any of the following: Myocardial infarction, coronary artery disease (defined as a greater than 50% angiographic narrowing of at least one coronary artery and/or a history of percutaneous coronary intervention or coronary artery bypass grafting), peripheral arterial disease, or complex aortic plaque?
   If any of the above are documented, set "vascular_disease": 1. Otherwise, set "vascular_disease": 0. Return the result in JSON format:
   {
     "vascular_disease": value
