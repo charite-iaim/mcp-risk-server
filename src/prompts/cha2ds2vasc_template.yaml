@@ -27,7 +27,7 @@ chf_history: |
     "chf_history": value
   }
 chf_lvef: |
-  Does the discharge letter state that the patient has a left ventricular ejection fraction (LVEF) below 40% (both HFrEF and HFpEF qualify) according to the most recent echocardiography exam? If yes, set "chf_lvef": 1, otherwise set "chf_lvef": 0. Return the result in JSON format:
+  Extract the left ventricular ejection fraction (LVEF) value from the most recent echocardiography exam? If no LVEF value is given, set "chf_lvef" to "missing". Return the result in JSON format:
   {
     "chf_lvef": value
   }
