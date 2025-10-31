@@ -6,7 +6,7 @@ sys_bp: |
     "sys_bp": value
   }
 renal_disease: |
-  Does the discharge letter state that the patient is undergoing chronic renal replacement therapy, i.e., has ever received a kidney transplant or is receiving dialysis? If yes, set "renal_disease": 1, otherwise "renal_disease": 0. Return the result in JSON format:
+  Does the discharge letter state that the patient has received a kidney transplant and/or is receiving chronic renal replacement therapy? If yes, set "renal_disease": 1, otherwise "renal_disease": 0. Return the result in JSON format:
   {
     "renal_disease": value
   }
