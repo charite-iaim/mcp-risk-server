@@ -37,9 +37,7 @@ hypertension_diagnosis: |
     "hypertension_diagnosis": value
   }
 hypertension_medication: |
-  Based on the discharge letter, does the patient take at least one medication from the following classes commonly used to treat hypertension?
-  - Calcium channel blockers: e.g., Amlodipine, Nifedipine, Lercanidipine, Felodipine
-  - Centrally acting agents: e.g., Moxonidine, Clonidine
+  Based on the discharge letter, does the patient take at least one of the following drugs: Amlodipine, nimodipine, Lercandipin and dihydralazine?
   If the discharge letter indicates that the patient is currently prescribed at least one such medication, set "hypertension_medication": 1. If not, set "hypertension_medication": 0. Return the result in JSON format:
   {
     "hypertension_medication": value
@@ -50,7 +48,7 @@ stroke_history: |
     "stroke_history": value
   }
 diabetes: |
-  Based on the discharge letter, does the patient have a documented diagnosis of diabetes mellitus (type 1 or type 2), or is the patient currently prescribed at least one glucose-lowering medication? Common medication classes include: biguanides (e.g., Metformin), sulfonylureas (e.g., Glimepiride, Gliclazide), DPP-4 inhibitors (e.g., Sitagliptin, Linagliptin), GLP-1 receptor agonists (e.g., Liraglutide, Semaglutide, SGLT2 inhibitors (e.g., Empagliflozin, Dapagliflozin), thiazolidinediones (e.g., Pioglitazone), and Insulin.
+  Based on the discharge letter, does the patient have a documented diagnosis of diabetes mellitus (type 1 or type 2), or is the patient currently prescribed at least one drug of the following drug classes: biguanides, DPP-4 inhibitors, GLP-1 receptor agonists, thiazolidinediones, and insulin?
   If the discharge documentation mentions a diagnosis of diabetes mellitus or the patient is on one or more of the above medication classes, set "diabetes": 1. Otherwise, set "diabetes": 0. Return the result in JSON format:
   {
     "diabetes": value
