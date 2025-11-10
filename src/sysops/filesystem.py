@@ -12,7 +12,7 @@ from src.sysops.names import *
 logger = logging.getLogger(__name__)
 
 
-def _get_repo_root():
+def get_repo_root():
     """
     Get the root directory of the git repository. Fallback to current working directory if not a git repo
 
@@ -27,7 +27,7 @@ def _get_repo_root():
 
 
 def load_prompt_template(score_str: str) -> dict:
-    template_dir = Path(_get_repo_root()) / "src" / "prompts"
+    template_dir = Path(get_repo_root()) / "src" / "prompts"
     template_file = template_dir / f"{score_str}_template.yaml"
     if not template_file.exists():
         raise FileNotFoundError(f"Template file not found: {template_file}")
@@ -37,7 +37,7 @@ def load_prompt_template(score_str: str) -> dict:
 
 
 def load_system_prompt() -> str:
-    template_file = Path(_get_repo_root()) / "src" / "prompts" / "system_prompt.yaml"
+    template_file = Path(get_repo_root()) / "src" / "prompts" / "system_prompt.yaml"
     if not template_file.exists():
         raise FileNotFoundError(f"Role system template file not found: {template_file}")
     with open(template_file, "r") as file:
@@ -53,23 +53,23 @@ def setup_directories(cfg):
     Args:
         cfg (dict): Configuration dictionary containing directory settings.
     """
-    root_dir = _get_repo_root()
-    outputs_dir = cfg.get("outputs_dir", "outputs")
+    root_dir = get_repo_root()
+    output_dir = cfg.get("output_dir", "output")
     score = get_score_str(cfg["risk_score"])
     # Ensure directories are absolute paths
-    if not os.path.isabs(outputs_dir):
-        outputs_dir = os.path.join(root_dir, outputs_dir)
+    if not os.path.isabs(output_dir):
+        output_dir = os.path.join(root_dir, output_dir)
 
     # Concatenate with run name
     run_name_default = secrets.token_hex(4)
     run_name = cfg.get("run_name", run_name_default)
-    outputs_dir = os.path.join(outputs_dir, run_name)
-    os.makedirs(outputs_dir, exist_ok=True)
-    cfg["outputs_dir"] = outputs_dir
+    output_dir = os.path.join(output_dir, run_name)
+    os.makedirs(output_dir, exist_ok=True)
+    cfg["output_dir"] = output_dir
 
     # Results directories
-    stage1_dir = os.path.join(outputs_dir, "stage1", score)
-    stage2_dir = os.path.join(outputs_dir, "stage2", score)
+    stage1_dir = os.path.join(output_dir, "stage1", score)
+    stage2_dir = os.path.join(output_dir, "stage2", score)
     os.makedirs(stage1_dir, exist_ok=True)
     os.makedirs(stage2_dir, exist_ok=True)
     cfg["stage1_dir"] = stage1_dir
@@ -79,7 +79,7 @@ def setup_directories(cfg):
     )
 
     # Log directory
-    log_dir = os.path.join(outputs_dir, "logs", score)
+    log_dir = os.path.join(output_dir, "logs", score)
     os.makedirs(log_dir, exist_ok=True)
     cfg["log_dir"] = log_dir
     logger.info(f"Logs are written to: {log_dir}")

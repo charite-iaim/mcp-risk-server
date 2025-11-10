@@ -17,8 +17,8 @@ network:
   https_proxy:
 
 # --- Output Settings ---
-# Output folder for results and logs (default: ./outputs)
-outputs_dir: ./outputs
+# Output folder for results and logs (default: ./output)
+output_dir: ./output
 
 # --- API Keys ---
 # If not set here, keys are expected as environment variables (see README).

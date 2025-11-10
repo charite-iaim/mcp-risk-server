@@ -31,17 +31,17 @@ pip install -e . [dev]
 ---
 
 ## 📝 Data Preparation
-Create a directory, e.g., named `data_dir` and place your patient reports as individual text files inside it.
+Create a directory, e.g., named `data` and place your patient reports as individual text files inside it.
 
 **File Naming**: Each file should correspond to a single case; the case ID will be extracted from the file name by removing the extension. If an underscore (`_`) is present, only the part before the first underscore is used as the case ID.
 **File Format**: plain text format and UTF-8 encoding recommended.
 
 ```shell
-data_dir
-      ├ Pa30df485.txt
-      ├ P6d9b89a8.txt
-            :
-      └ P0b1d9044.txt
+data
+   ├ Pa30df485.txt
+   ├ P6d9b89a8.txt
+          :
+   └ P0b1d9044.txt
 ```
 
 ---
@@ -56,11 +56,12 @@ cp config.example.yaml my_config.yaml
 then edit the fields in `my_config.yaml` to select the risk score you want to compute on the case files and select the language model and give provider-specific details
 ```yaml
 risk_score: HAS-BLED # or CHA2DS2-VASc, EuroSCORE II
+data_dir: ./data # path to your input data directory
 provider: openai # supported: openai, deepseek, perplexity, qwen
 model: gpt-4-1106-preview # or any other model name the provider gives you access to
 ```
 
-Depending on which LLM provider you selected, you have to set the following keys either as environment variables (option 1) or directly in the config (option 2):
+Depending on which LLM provider you select, you have to set the following keys either as environment variables (option 1) or directly in the config (option 2):
 
 api:
   api_key:      # Secret API key (e.g., sk-...)
@@ -95,9 +96,9 @@ fi
 ---
 
 ## 🖥️ Running the Server
-After having configured the configuration file and prepared the text data, for a local run of the Scoring server simply type in repo root level 
+After having configured the configuration file and prepared the text data, for a local run of the Scoring server run it as a module from repo root level: 
 ```shell
-python server.py
+python -m src.server
 ```
 This will start the server with the HTTP transport layer on port 8000. In terminal you should see output that indicates that the FastMCP server is running and is open for MCP communication on ` http://127.0.0.1:8000/mcp/`. You can quit the server anytime with Ctrl + C in terminal. 
 
@@ -106,21 +107,26 @@ This will start the server with the HTTP transport layer on port 8000. In termin
 ## 🤖 Client Usage
 Assuming your server is up and running, you can call the client simply by giving your config file:
 ```shell
-python client.py my_config.yaml
+python -m src.client --cfg <config_path> --data <data_path> --url <mcp_server_url>
 ```
+without arguments call defaults to:
+```shell
+python -m src.client --cfg ./my_config.yaml --data ./data --url http://127.0.0.1:8000/mcp
+```
+
 ---
 
 ## 📊 Output
 Two basic output directories are created, prefixed :
 
-- Log dir: `./outputs/logs/<run_name>`
-- Results dir: `./outputs/<run_name>`
+- Log dir: `./output/logs/<run_name>`
+- Results dir: `./output/<run_name>`
 
-Default folder is `outputs`, but can be changed under `outputs_dir` in your config.
+Default folder is `output`, but can be changed under `output_dir` in your config.
 For logging purposes LLM responses will be stored in the log dir separated by case id item-wise, in the format `<item>_<timestamp>.log`. `run_name` is taken from your config and `case_id`s extracted from text file prefixes as described here.
 
 
-Important to you is that items extracted from the LLM-returned JSON strings are aggregated over all texts and stored in table `./outputs/<run_name>/stage1/<score>/<score>_llm.csv`. Final risk scores calculated on `<score>_llm.csv` are placed into table `./outputs/<run_name>/stage2/<score>/<score>_calc.csv`.
+Important to you is that items extracted from the LLM-returned JSON strings are aggregated over all texts and stored in table `./output/<run_name>/stage1/<score>/<score>_llm.csv`. Final risk scores calculated on `<score>_llm.csv` are placed into table `./output/<run_name>/stage2/<score>/<score>_calc.csv`.
 
 ---
 
@@ -173,4 +179,4 @@ kill <pid>
 
 ### Repeated Warning That Items Could Not Be Extracted
 
-Check the log outputs under `cfg['log_dir'] / score / case_id / <item>_timestamp.log` and verify that captured LLM output is matched by regex defined in the `Extractor` class in `provider_tools.py`
+Check the log output under `cfg['log_dir'] / score / case_id / <item>_timestamp.log` and verify that captured LLM output is matched by regex defined in the `Extractor` class in `provider_tools.py`

@@ -13,7 +13,7 @@ from src.sysops import filesystem
 def scores_default():
     return {"hasbled", "cha2ds2vasc", "euroscoreii"}
 
-def test_get_repo_root_git(monkeypatch):
+def testget_repo_root_git(monkeypatch):
     monkeypatch.setattr(
         filesystem.git, 
         "Repo", 
@@ -21,16 +21,16 @@ def test_get_repo_root_git(monkeypatch):
             git=types.SimpleNamespace(rev_parse=lambda x: "/fake/repo/root")
         )
     )
-    print(filesystem._get_repo_root())
-    assert filesystem._get_repo_root() == "/fake/repo/root"
+    print(filesystem.get_repo_root())
+    assert filesystem.get_repo_root() == "/fake/repo/root"
 
-def test_get_repo_root_not_git(monkeypatch):
+def testget_repo_root_not_git(monkeypatch):
     monkeypatch.setattr(filesystem.git, "Repo", lambda **kwargs: (_ for _ in ()).throw(filesystem.git.exc.InvalidGitRepositoryError()))
     monkeypatch.setattr(os, "getcwd", lambda: "/fake/cwd")
-    assert filesystem._get_repo_root() == "/fake/cwd"
+    assert filesystem.get_repo_root() == "/fake/cwd"
 
 def test_load_prompt_template_presence(scores_default):
-    root_dir = Path(filesystem._get_repo_root())
+    root_dir = Path(filesystem.get_repo_root())
     template_dir = root_dir / "src" / "prompts"
     scores_detected = set()
     for fname in os.listdir(template_dir):
@@ -51,27 +51,27 @@ def test_load_prompt_template_not_found(tmp_path, monkeypatch):
         filesystem.load_prompt_template("missing")
 
 def test_setup_directories_creates_dirs(tmp_path, monkeypatch):
-    monkeypatch.setattr(filesystem, "_get_repo_root", lambda: str(tmp_path))
+    monkeypatch.setattr(filesystem, "get_repo_root", lambda: str(tmp_path))
     monkeypatch.setattr(filesystem, "get_str_representation", lambda x: "happy_score")
     cfg = {"risk_score": 'happy_score'}
     updated_cfg = filesystem.setup_directories(cfg)
-    outputs_dir = updated_cfg["outputs_dir"]
-    assert os.path.isdir(outputs_dir)
+    output_dir = updated_cfg["output_dir"]
+    assert os.path.isdir(output_dir)
     assert os.path.isdir(updated_cfg["stage1_dir"])
     assert os.path.isdir(updated_cfg["stage2_dir"])
     assert os.path.isdir(updated_cfg["log_dir"])
     
 
 def test_setup_directories_with_output_folder_and_run_name(tmp_path, monkeypatch):
-    monkeypatch.setattr(filesystem, "_get_repo_root", lambda: str(tmp_path))
+    monkeypatch.setattr(filesystem, "get_repo_root", lambda: str(tmp_path))
     monkeypatch.setattr(filesystem, "get_str_representation", lambda x: "happyness")
-    outputs_dir1 = Path(tmp_path) / "my_outputs"
+    output_dir1 = Path(tmp_path) / "my_output"
     run_name = "my_run"
-    outputs_dir2 = outputs_dir1 / run_name
-    cfg = {"risk_score": "happyness", "outputs_dir": outputs_dir1, "run_name": run_name}
+    output_dir2 = output_dir1 / run_name
+    cfg = {"risk_score": "happyness", "output_dir": output_dir1, "run_name": run_name}
     updated_cfg = filesystem.setup_directories(cfg)
-    assert str(outputs_dir2) == updated_cfg["outputs_dir"]
-    assert run_name in updated_cfg["outputs_dir"]
+    assert str(output_dir2) == updated_cfg["output_dir"]
+    assert run_name in updated_cfg["output_dir"]
     assert cfg["risk_score"] in cfg["stage1_dir"]
     assert cfg["risk_score"] in cfg["stage2_dir"]
     assert "stage1" in cfg["stage1_dir"]
@@ -90,7 +90,7 @@ def test_read_text_files_tmp(tmp_path):
     assert result == {"a": "hello", "b": "world"}
 
 def test_read_text_files_test_data():
-    root_dir = Path(filesystem._get_repo_root())
+    root_dir = Path(filesystem.get_repo_root())
     for score in ['cha2ds2vasc', 'euroscoreii', 'hasbled']:
         dir_score = root_dir / "tests" / "data" / f"reports_{score}"
         texts = filesystem.read_text_files(dir_score)

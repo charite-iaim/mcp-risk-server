@@ -1,8 +1,9 @@
 # /tests/scoring/test_hasbled.py
 
 import pandas as pd
+from pathlib import Path
 import pytest
-
+import yaml
 
 from src.scoring.hasbled import HASBLEDScore
 
@@ -13,8 +14,8 @@ def llm_row():
         {
             "sys_bp": "105",  # H = 0
             "renal_disease": False,
-            "dialisis": False,
-            "creatine": "2.2",  # A1 = 0
+            "dialysis": False,
+            "creatinine": "2.2",  # A1 = 0
             "unit_mg_per_dL": True,
             "liver_disease": False,
             "ast": "missing",
@@ -50,6 +51,15 @@ def calc_row():
             "score": 0,
         }
     )
+
+def test_hasbled_template_keys(llm_row):
+    template_file = Path("src") / "prompts" / "hasbled_template.yaml" 
+    with open(template_file) as f:
+        template = yaml.safe_load(f)
+    template_keys = set(template.keys())
+    template_keys.remove("intro")
+    llm_keys = set(llm_row.index)
+    assert template_keys == llm_keys
 
 
 def test_hasbled_default(llm_row, calc_row):
@@ -135,7 +145,7 @@ def test_hasbled_float_type(llm_row, calc_row):
     target = calc_row.copy()
     src["sys_bp"] = 105  # H = 0
     src["renal_disease"] = 0.0
-    src["creatine"] = "2.2"  # A1 = 0
+    src["creatinine"] = "2.2"  # A1 = 0
     src["ast"] = "140"
     src["bilirubin"] = 2.4  # A2 = 0
     src["alp"] = ".43"

@@ -16,7 +16,7 @@ def default_llm_hasbled():
             "sys_bp": "105",  # H = 0
             "renal_disease": False,
             "dialisis": False,
-            "creatine": "2.2",  # A1 = 0
+            "creatinine": "2.2",  # A1 = 0
             "unit_mg_per_dL": True,
             "liver_disease": False,
             "ast": "missing",
@@ -63,7 +63,7 @@ def default_config():
             "provider": "deepseek",
             "network": {"http_proxy": None, "https_proxy": None},
             "model": "mock-model",
-            "outputs_dir": Path(tempdir) / Path("outputs"),
+            "output_dir": Path(tempdir) / Path("output"),
             "api_key": "mock-api-key",
             "org_key": None,
             "project_id": None,

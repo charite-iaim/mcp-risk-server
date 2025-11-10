@@ -1,8 +1,10 @@
 # tests/scoring/test_cha2ds2vasc.py
 
 import pandas as pd
+from pathlib import Path
 import pytest
 from unittest.mock import patch
+import yaml
 
 from src.scoring.cha2ds2vasc import CHA2DS2VAScScore
 
@@ -47,6 +49,16 @@ def binary_variables():
         "diabetes",
         "vascular_disease",
     ]
+
+
+def test_cha2ds2vasc_template_keys(llm_row):
+    template_file = Path("src") / "prompts" / "cha2ds2vasc_template.yaml"
+    with open(template_file) as f:
+        template = yaml.safe_load(f)
+    template_keys = set(template.keys())
+    template_keys.remove("intro")
+    llm_keys = set(llm_row.index)
+    assert template_keys == llm_keys
 
 
 def test_cha2ds2vasc_default(llm_row, calc_row):

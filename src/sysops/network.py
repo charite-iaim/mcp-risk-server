@@ -66,9 +66,9 @@ def collect_api_keys(cfg):
         dict: A dictionary of API keys.
     """
     api_keys = {
-        "api_key": cfg.get("api_key", None),
-        "org_key": cfg.get("org_key", None),
-        "project_id": cfg.get("project_id", None),
+        "api_key": cfg.get("api", {}).get("api_key", None),
+        "org_key": cfg.get("api", {}).get("org_key", None),
+        "project_id": cfg.get("api", {}).get("project_id", None),
     }
     for key in ["API_KEY", "ORG_KEY", "PROJECT_ID"]:
         if key in os.environ:
@@ -78,4 +78,3 @@ def collect_api_keys(cfg):
         if not api_keys["api_key"] and "PERPLEXITY_API_KEY" in os.environ:
             api_keys["api_key"] = os.environ["PERPLEXITY_API_KEY"]
     return {k: v for k, v in api_keys.items() if v is not None}
-

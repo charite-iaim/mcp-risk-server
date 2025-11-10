@@ -15,7 +15,7 @@ def default_config():
         "provider": "mock",
         "network": {"http_proxy": None, "https_proxy": None},
         "model": "mock-model",
-        "outputs_dir": "./outputs",
+        "output_dir": "./output",
         "api_key": "mock-api-key",
         "org_key": "mock-org-key",
         "project_id": "mock-project-id",
@@ -44,7 +44,7 @@ def test_pipeline_config_attributes(default_config):
     assert pipeline._cfg["run_name"] == "test_run"
     assert pipeline._cfg["provider"] == "openai"
     assert pipeline._cfg["model"] == "mock-model"
-    assert "outputs/test_run" in Path(pipeline._cfg["outputs_dir"]).as_posix()
+    assert "output/test_run" in Path(pipeline._cfg["output_dir"]).as_posix()
     assert pipeline._cfg["api_key"] == "mock-api-key"
 
 

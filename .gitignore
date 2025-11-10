@@ -3,6 +3,7 @@ __pycache__/
 .pytest_cache
 *.py[cod]
 *$py.class
+build/
 
 # Virtual environment
 .mcp-env/
@@ -10,9 +11,9 @@ __pycache__/
 # Distribution / packaging
 *.egg-info/
 
-# Logs and outputs
+# Logs and output
 logs/
-outputs/
+output/
 *.log
 
 # OS files

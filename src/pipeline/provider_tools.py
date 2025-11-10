@@ -51,10 +51,10 @@ class Pipeline:
         # Setup network proxy if configured
         self.original_proxies = network.set_proxy(cfg)
 
-        # Setup outputs directories
+        # Setup output directories
         cfg = setup_directories(cfg)
 
-        # self.outputs_base_dir = Path(cfg['outputs_dir'])
+        # self.output_base_dir = Path(cfg['output_dir'])
         self.log_base_dir = Path(cfg["log_dir"])
         self.stage1_dir = Path(cfg["stage1_dir"])
         self.stage2_dir = Path(cfg["stage2_dir"])
@@ -69,8 +69,7 @@ class Pipeline:
         match (cfg["provider"]):
             case "deepseek":
                 self.client = OpenAI(
-                    api_key=cfg["api_key"], 
-                    base_url=BASE_URLS["deepseek"]
+                    api_key=cfg["api_key"], base_url=BASE_URLS["deepseek"]
                 )
             case "openai":
                 self.client = OpenAI(
@@ -80,8 +79,7 @@ class Pipeline:
                 )
             case "perplexity":
                 self.client = Perplexity(
-                    api_key=keys["api_key"],
-                    base_url=BASE_URLS["perplexity"]
+                    api_key=keys["api_key"], base_url=BASE_URLS["perplexity"]
                 )
             case "qwen":
                 self.client = OpenAI(

@@ -1,0 +1,22 @@
+Patient ID: P6980e21d
+Name: Julian Meier
+Date of Birth: 15.03.1985
+Discharge Date: 28.07.2025
+Sex: Male
+
+Julian Meier was admitted for a minor elective surgical procedure and had an uncomplicated hospital stay. The patient reports no history of cardiovascular disease or diabetes. The discharge letter documents:
+
+No symptoms of heart failure such as dyspnea, fatigue, or peripheral edema.
+No previous diagnosis of heart failure, nor any history of tachycardia-induced cardiomyopathy or decompensated heart failure.
+Left ventricular ejection fraction is normal at 60% according to the most recent echocardiogram.
+Blood pressure readings during admission were consistently within normal range (averaging 120/75 mmHg), with no diagnosis of hypertension.
+No antihypertensive medications are prescribed at discharge.
+There is no history of ischemic stroke, transient ischemic attack, or arterial thromboembolism documented.
+No diagnosis of diabetes mellitus; the patient is not on any glucose-lowering medication.
+Recent HbA1c from labs is 5.3%.
+No documented vascular disease, including no history of myocardial infarction, coronary artery disease, peripheral arterial disease, or aortic atherosclerosis.
+The patient is generally healthy, physically active, and nonsmoking.
+
+Current Medications at Discharge:
+- Paracetamol 500 mg as needed (for mild postoperative pain)
+- Vitamin D3 1000 IU daily

@@ -1,0 +1,23 @@
+Patient ID: Pefbb9575
+Name: May Dunn
+Date of Birth: 10.01.1935
+Discharge Date: 15.07.2025
+Sex: Female
+
+May Dunn was admitted for management of atrial fibrillation and associated comorbidities. The patient has a History of congestive heart failure with documented dyspnea on exertion, fatigue, and peripheral edema. She has a documented diagnosis of heart failure with reduced ejection fraction; her most recent echocardiogram revealed an LVEF of 35%. She also has a long-standing diagnosis of arterial hypertension, with several blood pressure readings during admission exceeding 160/95 mmHg. Antihypertensive therapy includes Ramipril, Metoprolol, and Hydrochlorothiazide.
+
+Her past medical history is notable for an ischemic stroke two years ago, resulting in mild residual right-sided weakness. Additionally, she has type 2 diabetes mellitus, for which she is currently treated with Metformin and Insulin. The most recent HbA1c measurement was 8.2%.
+
+Vascular disease is also present, with a history of myocardial infarction five years ago, followed by coronary artery bypass grafting (CABG). She has documented peripheral arterial disease, with symptoms of intermittent claudication. A transient ischemic attack was also recorded three years ago.
+
+Overall, the patient presents with multiple high-risk comorbidities, including advanced age and female sex.
+
+Current Medications at Discharge:
+- Ramipril 5 mg daily
+- Metoprolol 50 mg twice daily
+- Hydrochlorothiazide 25 mg daily
+- Metformin 1000 mg twice daily
+- Insulin glargine 20 units nightly
+- Aspirin 100 mg daily
+- Atorvastatin 40 mg nightly
+- Furosemide 40 mg daily

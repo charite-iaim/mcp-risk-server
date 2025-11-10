@@ -23,7 +23,7 @@ def default_cfg():
             "provider": "deepseek",
             "network": {"http_proxy": None, "https_proxy": None},
             "model": "mock-model",
-            "outputs_dir": Path(tempdir) / Path("outputs"),
+            "output_dir": Path(tempdir) / Path("output"),
             "api_key": "mock-api-key",
             "org_key": None,
             "project_id": None,
@@ -124,9 +124,7 @@ def test_checkpointing_llm_init(default_cfg, hasbled_llm_P4ab463aa):
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     # call_per_item is patched, list of mocked_responses iterated instead
     with patch.object(pipeline, "call_per_item", side_effect=mocked_responses):
-        target_series = pipeline.call_llm(
-            text="Report text", text_id=text_id, ts=ts
-        )
+        target_series = pipeline.call_llm(text="Report text", text_id=text_id, ts=ts)
         assert solution_series.shape[0] == target_series.shape[0]
         # check results row
         pdt.assert_series_equal(target_series, solution_series)
@@ -181,9 +179,7 @@ def test_checkpointing_llm_proceed_within_case(default_cfg, hasbled_llm_P4ab463a
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     # call_per_item is patched, list of mocked_responses iterated instead
     with patch.object(pipeline, "call_per_item", side_effect=mocked_responses):
-        target_series = pipeline.call_llm(
-            text="Report text", text_id=text_id, ts=ts
-        )
+        target_series = pipeline.call_llm(text="Report text", text_id=text_id, ts=ts)
 
         assert solution_series.shape[0] == target_series.shape[0]
         # check results row

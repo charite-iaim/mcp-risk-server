@@ -14,7 +14,7 @@ import yaml
 
 from src.core import fastmcp_app
 from src.pipeline.provider_tools import Pipeline
-from src.sysops.filesystem import _get_repo_root, setup_directories
+from src.sysops.filesystem import get_repo_root, setup_directories
 
 
 @pytest.fixture
@@ -31,7 +31,7 @@ def default_cfg():
             "provider": "deepseek",
             "network": {"http_proxy": None, "https_proxy": None},
             "model": "mock-model",
-            "outputs_dir": str(Path(tempdir) / Path("outputs")),
+            "output_dir": str(Path(tempdir) / Path("output")),
             "api_key": "mock-api-key",
             "org_key": None,
             "project_id": None,
@@ -40,14 +40,14 @@ def default_cfg():
 
 
 def _hasbled_llm(index):
-    data_dir = Path(_get_repo_root()) / "tests" / "data" / "reports_hasbled"
+    data_dir = Path(get_repo_root()) / "tests" / "data" / "reports_hasbled"
     stage1_file = data_dir / "reference_output.csv"
     df = pd.read_csv(stage1_file)
     return df[(df["index"] == index) & (df["llm_output"] != "False")]
 
 
 def _hasbled_calc(index):
-    data_dir = Path(_get_repo_root()) / "tests" / "data" / "reports_hasbled"
+    data_dir = Path(get_repo_root()) / "tests" / "data" / "reports_hasbled"
     stage1_file = data_dir / "reference_output.csv"
     df = pd.read_csv(stage1_file)
     return df[(df["index"] == index) & (df["llm_output"] == "False")]
@@ -66,16 +66,6 @@ def hasbled_llm_Pb4cf5ebc():
 @pytest.fixture
 def hasbled_calc_P4ab463aa():
     return _hasbled_calc("P4ab463aa")
-
-
-@pytest.fixture
-def hasbled_calc_Pb4cf5ebc():
-    return _hasbled_calc("Pb4cf5ebc")
-
-
-@pytest.fixture
-def hasbled_llm_Pb4cf5ebc():
-    return _hasbled_llm("Pb4cf5ebc")
 
 
 @pytest.fixture
@@ -105,7 +95,7 @@ def test_checkpointing_llm_proceed_with_next_case1(
     score_str = cfg["risk_score"]
     # prepare env: store cfg in tmp dir
     cfg = default_cfg.copy()
-    data_folder = Path(_get_repo_root()) / "tests/data/reports_hasbled"
+    data_folder = Path(get_repo_root()) / "tests/data/reports_hasbled"
     assert os.path.exists(data_folder)
     with tempfile.TemporaryDirectory() as tempdir:
         cfg_file = Path(tempdir) / "cfg.yaml"
@@ -178,7 +168,7 @@ async def test_checkpointing_llm_proceed_with_next_case2(
     score_str = cfg["risk_score"]
     # prepare env: store cfg in tmp dir
     cfg = default_cfg.copy()
-    data_folder = Path(_get_repo_root()) / "tests/data/reports_hasbled"
+    data_folder = Path(get_repo_root()) / "tests/data/reports_hasbled"
     with tempfile.TemporaryDirectory() as tempdir:
         cfg_file = Path(tempdir) / "cfg.yaml"
         save_dict_as_yaml(cfg, cfg_file)
