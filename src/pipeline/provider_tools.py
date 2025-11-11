@@ -254,26 +254,12 @@ class Pipeline:
         logger.info("Network proxies cleared.")
 
 
-@fastmcp_app.tool()
-def llm_pipeline(data_folder: str, config_file: str) -> dict:
-    """
-    Single entry point for the LLM pipeline. For each case file in data_folder
-    risk score items are extracted and the final score calculated as defined
-    by physician rules and formula according to the original publication.
-    Results of the first stage are collected in <score>_llm.csv and final
-    calculated scores in <score>_calc.csv.
-
-    accepted payload:
-    {
-        'data_folder': str, # path to folder with patient data
-        'config_file': str  # path to config.yaml with api key and model name
-    }
-    """
-
+def _llm_pipeline_inner(data_folder: str, config_file: str) -> dict:
     # read configuration file
     assert os.path.isfile(config_file)
     with open(config_file) as f:
         cfg = yaml.safe_load(f)
+    print("read config in inner pipeline:\n", cfg)
 
     # read patient data stored as txt file in data folder
     texts = read_text_files(data_folder)
@@ -281,6 +267,7 @@ def llm_pipeline(data_folder: str, config_file: str) -> dict:
     # init pipeline
     pipeline = Pipeline(cfg)
     text_ids = sorted(texts.keys())
+    print("text ids: ", text_ids)
     results = []
     for text_id in text_ids:
         text = texts[text_id]
@@ -302,3 +289,21 @@ def llm_pipeline(data_folder: str, config_file: str) -> dict:
     )
     df_as_dict = pd.DataFrame(results).to_dict(orient="records")
     return {"results": df_as_dict}
+
+
+@fastmcp_app.tool()
+def llm_pipeline(data_folder: str, config_file: str) -> dict:
+    """
+    Single entry point for the LLM pipeline. For each case file in data_folder
+    risk score items are extracted and the final score calculated as defined
+    by physician rules and formula according to the original publication.
+    Results of the first stage are collected in <score>_llm.csv and final
+    calculated scores in <score>_calc.csv.
+
+    accepted payload:
+    {
+        'data_folder': str, # path to folder with patient data
+        'config_file': str  # path to config.yaml with api key and model name
+    }
+    """
+    return _llm_pipeline_inner(data_folder, config_file)
