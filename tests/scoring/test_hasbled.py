@@ -14,7 +14,6 @@ def llm_row():
         {
             "sys_bp": "105",  # H = 0
             "renal_disease": False,
-            "dialysis": False,
             "creatinine": "2.2",  # A1 = 0
             "unit_mg_per_dL": True,
             "liver_disease": False,
@@ -75,7 +74,6 @@ def test_hasbled_bool_type_true(llm_row, calc_row):
     target = calc_row.copy()
     scorer = HASBLEDScore()
     src["unit_mg_per_dL"] = "YES"
-    src["dialysis"] = "1.0"
     src["renal_disease"] = "True"  # A1 = 1
     target["A1"] = 1
     target["score"] = 1
@@ -126,7 +124,6 @@ def test_hasbled_bool_type_false(llm_row, calc_row):
     src = llm_row.copy()
     target = calc_row.copy()
     src["renal_disease"] = "False"
-    src["dialysis"] = "0.0"
     src["liver_disease"] = "false"
     src["stroke_history"] = "FALSE"
     src["bleeding_history"] = "0"
