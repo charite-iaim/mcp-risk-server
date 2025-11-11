@@ -81,11 +81,13 @@ def calc_row():
         }
     )
 
+
 def test_euroscoreii_template_keys(llm_row):
-    template_file = Path("scr") / "prompts" / "euroscoreii_template.yaml" 
+    template_file = Path("src") / "prompts" / "euroscoreii_template.yaml"
     with open(template_file) as f:
         template = yaml.safe_load(f)
     template_keys = set(template.keys())
+    template_keys.remove("intro")
     llm_keys = set(llm_row.index)
     assert template_keys == llm_keys
 
@@ -438,4 +440,3 @@ def test_euroscoreii_weight_of_procedure(llm_row, calc_row):
         output = scorer.calculate(src)
         assert output["weight_of_procedure"] == tgt["weight_of_procedure"]
         assert np.isclose(output["score"], tgt["score"], atol=0.005)
-
