@@ -12,11 +12,15 @@ def default_config():
     return {
         "run_name": "test_run",
         "risk_score": "happyness",
-        "provider": "mock",
+        "provider": "mock-provider",
         "network": {"http_proxy": None, "https_proxy": None},
         "model": "mock-model",
         "output_dir": "./output",
-        "api_key": "mock-api-key",
+        "api": {
+            "api_key": "mock-api-key", 
+            "org_key": "mock-org-key",
+            "project_id": "mock-project-id"
+        },
         "org_key": "mock-org-key",
         "project_id": "mock-project-id",
     }
@@ -24,6 +28,7 @@ def default_config():
 
 @pytest.mark.mock_api
 def test_pipeline_raises_on_unknown_provider(default_config):
+
     with pytest.raises(ValueError, match="Unknown API"):
         Pipeline(default_config)
 
@@ -45,7 +50,7 @@ def test_pipeline_config_attributes(default_config):
     assert pipeline._cfg["provider"] == "openai"
     assert pipeline._cfg["model"] == "mock-model"
     assert "output/test_run" in Path(pipeline._cfg["output_dir"]).as_posix()
-    assert pipeline._cfg["api_key"] == "mock-api-key"
+    assert pipeline._cfg["api"]["api_key"] == "mock-api-key"
 
 
 @pytest.mark.mock_api
