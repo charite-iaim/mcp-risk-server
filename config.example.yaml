@@ -31,7 +31,9 @@ api:
 # LLM provider: openai, deepseek, perplexity, or qwen
 provider: openai
 # Model name you have access to, or leave as 'default' to use provider default
-model: gpt-4-1106-preview
+# Query list of available models from openai with curl (darwin) or GET (Linux)
+# curl -i https://api.openai.com/v1/models -H "Authorization: Bearer sk-proj-...""
+model: gpt-4-0613
 
 # --- LLM API Call Parameters ---
 params:
