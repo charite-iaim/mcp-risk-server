@@ -196,7 +196,7 @@ class Pipeline:
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt},
         ]
-        params = self._cfg["params"]
+        params = self._cfg["params"] or {}
         completion = self.client.chat.completions.create(
             model=model, messages=messages, **params
         )
@@ -259,15 +259,14 @@ def _llm_pipeline_inner(data_folder: str, config_file: str) -> dict:
     assert os.path.isfile(config_file)
     with open(config_file) as f:
         cfg = yaml.safe_load(f)
-    print("read config in inner pipeline:\n", cfg)
-
+    
     # read patient data stored as txt file in data folder
+    logger.info(f"Read data from {data_folder}")
     texts = read_text_files(data_folder)
 
     # init pipeline
     pipeline = Pipeline(cfg)
     text_ids = sorted(texts.keys())
-    print("text ids: ", text_ids)
     results = []
     for text_id in text_ids:
         text = texts[text_id]
