@@ -42,7 +42,7 @@ class CHA2DS2VAScScore(RiskScore):
         # C: Congestive heart failure
         chf_symptoms = self.safe_bool(llm_output_row.get("chf_symptoms"))
         chf_history = self.safe_bool(llm_output_row.get("chf_history"))
-        chf_lvef = self.safe_bool(llm_output_row.get("chf_lvef"))
+        chf_lvef = self.safe_float(llm_output_row.get("chf_lvef")) < 40
         C = chf_symptoms | chf_history | chf_lvef
 
         # H: hypertension history
