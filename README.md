@@ -58,7 +58,7 @@ then edit the fields in `my_config.yaml` to select the risk score you want to co
 risk_score: HAS-BLED # or CHA2DS2-VASc, EuroSCORE II
 data_dir: ./data # path to your input data directory
 provider: openai # supported: openai, deepseek, perplexity, qwen
-model: gpt-4-1106-preview # or any other model name the provider gives you access to
+model: gpt-4-0613 # or any other model name the provider gives you access to
 ```
 
 Depending on which LLM provider you select, you have to set the following keys either as environment variables (option 1) or directly in the config (option 2):
