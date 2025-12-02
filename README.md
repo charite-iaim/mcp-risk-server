@@ -56,18 +56,12 @@ cp config.example.yaml my_config.yaml
 then edit the fields in `my_config.yaml` to select the risk score you want to compute on the case files and select the language model and give provider-specific details
 ```yaml
 risk_score: HAS-BLED # or CHA2DS2-VASc, EuroSCORE II
-data_dir: ./data # path to your input data directory
 provider: openai # supported: openai, deepseek, perplexity, qwen
 model: gpt-4-0613 # or any other model name the provider gives you access to
 ```
 
-Depending on which LLM provider you select, you have to set the following keys either as environment variables (option 1) or directly in the config (option 2):
-
-api:
-  api_key:      # Secret API key (e.g., sk-...)
-  org_key:      # Organization key, if required (e.g., org-...)
-  project_id:   # Project ID, if required (e.g., proj_...)
-
+### Provisioning of API Keys
+Depending on which LLM provider you select, you have to set the following keys either as environment variables (option 1):
 
 | Provider | Environment Variable | Config Variable |
 | -- | -- | -- |
@@ -77,6 +71,14 @@ api:
 | | `ORG_KEY` (*org-...*) | `api:org_key` |
 | | `PROJECT_ID` (*proj_...*) | `api:project_id` |
 | Perplexity | `API_KEY` | `api:api_key` |
+
+or directly in the config file (option 2):
+```yaml
+api:
+  api_key:      # Secret API key (e.g., sk-...)
+  org_key:      # Organization key, if required (e.g., org-...)
+  project_id:   # Project ID, if required (e.g., proj_...)
+````
 
 **Advanced**: You can set the keys permanently in a separate bash script `.bash_keys` with tight permissions. First create a separate file:
 ```shell
