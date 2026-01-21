@@ -26,9 +26,10 @@ api:
   api_key:      # Secret API key (e.g., sk-...)
   org_key:      # Organization key, if required (e.g., org-...)
   project_id:   # Project ID, if required (e.g., proj_...)
+  endpoint:     # API endpoint URL for local models (e.g. http://localhost:11434/v1)
 
 # --- Model Settings ---
-# LLM provider: openai, deepseek, perplexity, or qwen
+# LLM provider: openai, deepseek, perplexity, qwen, or local
 provider: openai
 # Model name you have access to, or leave as 'default' to use provider default
 # Query list of available models from openai with curl (darwin) or GET (Linux)

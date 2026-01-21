@@ -1,0 +1,36 @@
+---
+services:
+  init:
+    image: ollama/ollama
+    volumes:
+      - ollama:/root/.ollama
+    entrypoint: ""
+    command: |
+      sh -c "/bin/ollama pull qwen3:0.6b &&
+             /bin/ollama pull qwen3:1.7b &&
+             /bin/ollama pull qwen3:4b &&
+             /bin/ollama pull qwen3:8b &&
+             /bin/ollama pull qwen3:14b &&
+             /bin/ollama list"
+    environment:
+      - OLLAMA_HOST="ollama:11434"
+    depends_on:
+      - ollama
+    deploy:
+      restart_policy:
+        condition: "no"
+  ollama:
+    image: ollama/ollama
+    ports:
+      - 11434:11434
+    volumes:
+      - ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - count: all
+              capabilities: ["gpu"]
+
+volumes:
+  ollama: {}

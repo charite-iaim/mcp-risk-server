@@ -14,7 +14,7 @@ source .mcp-env/bin/activate
 ```
 Windows:
 ```shell
-.mcp-env\Scripts\activate # or 
+.mcp-env\Scripts\activate # or
 # .mcp-env\Scripts\Activate.psl
 ```
 
@@ -67,7 +67,7 @@ api:
   api_key:      # Secret API key (e.g., sk-...)
   org_key:      # Organization key, if required (e.g., org-...)
   project_id:   # Project ID, if required (e.g., proj_...)
-
+  endpoint:     # API endpoint (for local LLMs, e.g. http://localhost:11434/v1)
 
 | Provider | Environment Variable | Config Variable |
 | -- | -- | -- |
@@ -77,6 +77,7 @@ api:
 | | `ORG_KEY` (*org-...*) | `api:org_key` |
 | | `PROJECT_ID` (*proj_...*) | `api:project_id` |
 | Perplexity | `API_KEY` | `api:api_key` |
+| Local | `API_ENDPOINT` | `api:endpoint` |
 
 **Advanced**: You can set the keys permanently in a separate bash script `.bash_keys` with tight permissions. First create a separate file:
 ```shell
@@ -84,7 +85,7 @@ vi ~/.bash_keys
 ```
 and write needed keys into it, e.g., `API_KEY=<secret_api_key>`. Now, adjust rights such that file can only be read by current user:
 ```shell
-chmod 400 ~/.bash_keys  
+chmod 400 ~/.bash_keys
 ```
 Allow automatic source execution upon `source ~/.bash_profile` call by inserting these three lines into you `~/.bash_profile`:
 ```shell
@@ -140,9 +141,32 @@ To extend the MCP server app by a new risk score, two things have to be done:
 
 Finally, modify the configuration file to name the new risk score under `payload` -> `risk_score` and run the pipeline as described above.
 
+## Running a local model with Ollama
+
+Follow the instructions to install Ollama on your platform.
+E.g. for Docker: https://docs.ollama.com/docker
+
+Start Ollama:
+```shell
+docker run --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+```
+
+Initialize a model:
+```shell
+docker exec -it ollama ollama pull qwen3:14b
+```
+
+Configure the model in my_config.yaml:
+```
+api:
+  api_key: foobar # will be ignored
+  endpoint: http://localhost:11434/v1
+provider: local
+model: qwen3:14b
+```
 
 ## 🧪 Unit Testing
-Most unit tests do not require an LLM provider connection or use a mockup. 
+Most unit tests do not require an LLM provider connection or use a mockup.
 
 To execute these tests, run from top level:
 ```shell
@@ -154,16 +178,16 @@ To run integration tests with mocked LLM API calls (no API key required)
 ```shell
 pytest -m mock_llm  # Runs only tests marked as "mock_llm"
 ```
-Only tests decorated with `@pytest.mark.real_api` will require a valid API key set as **environment variable** and consume tokens from your account. In addition the provider and model name must be set. The tests will will run with the dummy data located under `.\tests\data\<score>`. By default the CHA2DS2-VASc score will be calculated from the reports under `.\tests\data\<score>` and compared to expected values of the fictitious patients whose true score is the value after underscore in their report names.
+Only tests decorated with `@pytest.mark.real_api` will require a valid API key set as **environment variable** and consume tokens from your account. In addition the provider and model name must be set. The tests will run with the dummy data located under `.\tests\data\<score>`. By default the CHA2DS2-VASc score will be calculated from the reports under `.\tests\data\<score>` and compared to expected values of the fictitious patients whose true score is the value after underscore in their report names.
 
 ```shell
 export TEST_PROVIDER=perplexity
 export TEST_MODEL=sonar-pro
 export TEST_API_KEY=sk-...
 
-# Runs dedicated HAS-BLED score calcuation test with real 
+# Runs dedicated HAS-BLED score calcuation test with real
 # API calls on two test reports located at tests/data/hasbled
-pytest -m real_api::test_real_api_hasbled   
+pytest -m real_api::test_real_api_hasbled
 ```
 
 ---
