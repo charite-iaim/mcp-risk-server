@@ -33,6 +33,7 @@ BASE_URLS = {
     "deepseek": "https://api.deepseek.com",
     "perplexity": "https://api.perplexity.ai",
     "qwen": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+    "local": "http://localhost:11434/v1",
 }
 
 
@@ -84,6 +85,11 @@ class Pipeline:
             case "qwen":
                 self.client = OpenAI(
                     api_key=keys["api_key"], base_url=BASE_URLS["qwen"]
+                )
+            case "local":
+                self.client = OpenAI(
+                    api_key='ollama',
+                    base_url=keys.get("api_endpoint", BASE_URLS["local"]),
                 )
             case _:
                 raise ValueError(f"Unknown API: {cfg['provider']}")
@@ -259,7 +265,7 @@ def _llm_pipeline_inner(data_folder: str, config_file: str) -> dict:
     assert os.path.isfile(config_file)
     with open(config_file) as f:
         cfg = yaml.safe_load(f)
-    
+
     # read patient data stored as txt file in data folder
     logger.info(f"Read data from {data_folder}")
     texts = read_text_files(data_folder)

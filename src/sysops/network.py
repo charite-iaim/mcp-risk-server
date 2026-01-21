@@ -69,8 +69,9 @@ def collect_api_keys(cfg):
         "api_key": cfg.get("api", {}).get("api_key", None),
         "org_key": cfg.get("api", {}).get("org_key", None),
         "project_id": cfg.get("api", {}).get("project_id", None),
+        "api_endpoint": cfg.get("api", {}).get("endpoint", None),
     }
-    for key in ["API_KEY", "ORG_KEY", "PROJECT_ID"]:
+    for key in ["API_KEY", "ORG_KEY", "PROJECT_ID", "API_ENDPOINT"]:
         if key in os.environ:
             api_keys[key.lower()] = os.environ[key]
     # fetch Perplexity API key if not set yet

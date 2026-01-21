@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
-# install modules with 
-#   `pip install .` 
-# or for developers 
+# install modules with
+#   `pip install .`
+# or for developers
 #   `pip install . [dev]`
 setup(
     name='mcp-risk-server',
