@@ -22,10 +22,15 @@ output_dir: ./output
 
 # --- API Keys ---
 # If not set here, keys are expected as environment variables (see README).
+# LLM service URL, eg, 
+# deepseek: https://api.deepseek.com
+# perplexity: https://api.perplexity.ai
+# qwen: https://dashscope-intl.aliyuncs.com/compatible-mode/v1
 api:
-  api_key:      # Secret API key (e.g., sk-...)
-  org_key:      # Organization key, if required (e.g., org-...)
-  project_id:   # Project ID, if required (e.g., proj_...)
+  base_url:   # LLM service URL, see examples for known providers above or self-hosted
+  api_key:    # Secret API key (e.g., sk-...)
+  org_key:    # Organization key, if required (e.g., org-...)
+  project_id: # Project ID, if required (e.g., proj_...)
 
 # --- Model Settings ---
 # LLM provider: openai, deepseek, perplexity, or qwen
