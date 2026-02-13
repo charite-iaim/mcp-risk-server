@@ -56,7 +56,6 @@ cp config.example.yaml my_config.yaml
 then edit the fields in `my_config.yaml` to select the risk score you want to compute on the case files and select the language model and give provider-specific details
 ```yaml
 risk_score: HAS-BLED # or CHA2DS2-VASc, EuroSCORE II
-data_dir: ./data # path to your input data directory
 provider: openai # supported: openai, deepseek, perplexity, qwen
 model: gpt-4-0613 # or any other model name the provider gives you access to
 ```

@@ -54,7 +54,7 @@ def clear_proxy(proxy_settings=None):
     logger.info("Network proxies reset.")
 
 
-def collect_api_keys(cfg):
+def collect_api_credentials(cfg):
     """
     Collect API keys from the configuration or environment variables.
     Keys defined in the configuration will override those in the environment.
@@ -65,16 +65,14 @@ def collect_api_keys(cfg):
     Returns:
         dict: A dictionary of API keys.
     """
-    api_keys = {
+    credentials = {
+        "base_url": cfg.get("api", {}).get("base_url", None), 
         "api_key": cfg.get("api", {}).get("api_key", None),
         "org_key": cfg.get("api", {}).get("org_key", None),
         "project_id": cfg.get("api", {}).get("project_id", None),
     }
-    for key in ["API_KEY", "ORG_KEY", "PROJECT_ID"]:
+    for key in ["BASE_URL", "API_KEY", "ORG_KEY", "PROJECT_ID"]:
         if key in os.environ:
-            api_keys[key.lower()] = os.environ[key]
-    # fetch Perplexity API key if not set yet
-    if cfg["provider"] == "perplexity":
-        if not api_keys["api_key"] and "PERPLEXITY_API_KEY" in os.environ:
-            api_keys["api_key"] = os.environ["PERPLEXITY_API_KEY"]
-    return {k: v for k, v in api_keys.items() if v is not None}
+            credentials[key.lower()] = os.environ[key]
+    return credentials
+    

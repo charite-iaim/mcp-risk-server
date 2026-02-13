@@ -29,12 +29,6 @@ from src.scoring.hasbled import *
 
 logger = logging.getLogger(__name__)
 
-BASE_URLS = {
-    "deepseek": "https://api.deepseek.com",
-    "perplexity": "https://api.perplexity.ai",
-    "qwen": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
-}
-
 
 class Pipeline:
 
@@ -63,27 +57,21 @@ class Pipeline:
 
         self.results_file2 = self.stage2_dir / Path(f"{self.score_str}_calc.csv")
 
-        # Collect keys for API calls
-        keys = network.collect_api_keys(cfg)
+        # Collect credentials for API calls
+        credentials = network.collect_api_credentials(cfg)
+        
         # init client
         match (cfg["provider"]):
-            case "deepseek":
+            case "charite" | "deepseek" | "perplexity" | "qwen":
                 self.client = OpenAI(
-                    api_key=cfg["api_key"], base_url=BASE_URLS["deepseek"]
+                    api_key=credentials["api_key"], 
+                    base_url=credentials["base_url"]
                 )
             case "openai":
                 self.client = OpenAI(
-                    api_key=keys["api_key"],
-                    organization=keys["org_key"],
-                    project=keys["project_id"],
-                )
-            case "perplexity":
-                self.client = Perplexity(
-                    api_key=keys["api_key"], base_url=BASE_URLS["perplexity"]
-                )
-            case "qwen":
-                self.client = OpenAI(
-                    api_key=keys["api_key"], base_url=BASE_URLS["qwen"]
+                    api_key=credentials["api_key"],
+                    organization=credentials["org_key"],
+                    project=credentials["project_id"],
                 )
             case _:
                 raise ValueError(f"Unknown API: {cfg['provider']}")
