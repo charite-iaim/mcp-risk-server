@@ -176,9 +176,22 @@ pytest -m real_api::test_real_api_hasbled
 Kill server for restart or termination if ctrl + c does not work by identifying associated process id and kill
 ```shell
 ps aux | grep server.py
-kill <pid>
+# or
+lsof -nP -iTCP:8000 -sTCP:LISTEN
+```
+followed by killing 
+```shell
+kill -9 <pid>
 ```
 
 ### Repeated Warning That Items Could Not Be Extracted
 
 Check the log output under `cfg['log_dir'] / score / case_id / <item>_timestamp.log` and verify that captured LLM output is matched by regex defined in the `Extractor` class in `provider_tools.py`
+
+
+---
+
+## References
+
+- Roeschl T, Hoffmann M, et al.: *Development of an LLM Pipeline Surpassing Physicians in Cardiovascular Risk Score Calculation*. [medRxiv preprint](https://www.medrxiv.org/content/10.1101/2025.11.11.25340002v1)
+- Code for the baseline comparisons (basic prompting and RAG) used in the study can be found here: [GitHub](https://github.com/charite-iaim/risk-rag-baseline)
